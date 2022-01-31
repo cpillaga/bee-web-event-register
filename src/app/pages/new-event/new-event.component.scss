@@ -1,0 +1,166 @@
+.active{
+    background-color: #000 !important;
+    color: #F6C042 !important;
+    text-align: center;
+}
+
+.inactive {
+    background-color: #ffffff !important; 
+    color: #000 !important;
+    text-align: center;
+}
+
+
+#div1 {
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 329px;
+  width: 100%;
+}
+
+#div1::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+#div1::-webkit-scrollbar:vertical {
+  width:10px;
+}
+
+#div1::-webkit-scrollbar-button:increment,#div1::-webkit-scrollbar-button {
+  display: none;
+} 
+
+#div1::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+#div1::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+}
+
+#div1::-webkit-scrollbar-track {
+  border-radius: 10px;  
+}
+
+ngx-dropzone,
+.custom-dropzone {
+  // margin: 20px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.custom-dropzone {
+	height: 250px;
+  width: 400px;
+	// background: #ced4da;
+	background: #fff;
+	color: #000;
+	border: 5px dashed #fff;
+	border-radius: 5px;
+  box-shadow: 0px 1px 3px 1px #ced4da;
+	font-size: 20px; 
+  padding-top: 30px;
+}
+
+.boton .true{
+  background-color: #F6C042;
+}
+
+.boton .false{
+  background-color: #ced4da;
+}
+
+.custom-dropzone.ngx-dz-hovered {
+  border: 5px solid rgb(0,0,0);
+}
+
+ngx-dropzone,
+.custom-dropzone-p {
+  margin: 20px;
+}
+
+.custom-dropzone-p {
+	height: 250px;
+	background: #fff;
+	color: #000;
+	border: 5px dashed #fff;
+	border-radius: 5px;
+  box-shadow: 0px 1px 3px 1px #ced4da;
+	font-size: 20px;
+}
+
+.custom-dropzone-p.ngx-dz-hovered {
+  border: 5px solid rgb(235, 79, 79);
+}
+
+#preview {
+  display: flex;
+  height: 180px;
+  min-height: 180px;
+  min-width: 200px;
+  max-width: 200px;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  // padding: 0px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+#preview1 {
+  display: flex;
+  height: 180px;
+  min-height: 180px;
+  min-width: 200px;
+  max-width: 200px;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  // padding: 0px 20px;
+  margin: 10px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  position: relative;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+
+.padre {
+  display: table;
+  height:200px;
+}
+
+.hijo {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.delete-icon{
+  font-size: 30px;
+  cursor: pointer;
+  color: #ce4b4c;
+  margin-top: 7px;
+}
+
+
+textarea {
+  resize: none;
+}
+
+
+#map { 
+  width: 100%; 
+  height: 100% !important;
+  margin-top: 10px !important;
+}

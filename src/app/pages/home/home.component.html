@@ -1,0 +1,118 @@
+<div class="header bg-cyan pb-6" *ngIf="shop != undefined">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-home"> </i>
+                    </a>
+                    <span> - </span>
+                    <h6 class="h2 text-white d-inline-block mb-0">Inicio</h6>
+                </div>
+            </div>
+            <div class=" row">
+                <div class=" col-xl-4 col-md-6">
+                    <div class=" card card-stats">
+                        <div class=" card-body">
+                            <div class=" row">
+                                <div class=" col">
+                                    <h4 class=" card-title text-uppercase text-muted mb-0">
+                                        {{shop.legalName}}
+                                    </h4>
+
+                                    <span *ngIf="shop.open" class="h4 text-green font-weight-bold mb-0"> ABIERTO </span>
+                                    <span *ngIf="!shop.open" class="h4 text-red font-weight-bold mb-0"> CERRADO </span>
+                                </div>
+
+                                <div *ngIf="shop.open" class=" col-auto">
+                                    <div class=" icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!shop.open" class=" col-auto">
+                                    <div class=" icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-3">
+                                <img alt="Image placeholder" class=" img-fluid rounded"
+                                        src="{{url}}archive/shop/{{shop.img}}" />
+                            </div>
+
+                            <div class="text-center mt-3">
+                                <img alt="Image placeholder" style="height: 100px; margin-top: 10px;"
+                                        src="{{shop.qrShop}}" />
+                            </div>
+
+                            <div class="text-center">
+                                <button *ngIf="shop.open" class="btn btn-primary btn-sm mt-3" type="button" (click)="openShop(false)">
+                                    <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                                    CERRAR
+                                </button>
+                                <button *ngIf="!shop.open" class="btn btn-primary btn-sm mt-3" type="button" (click)="openShop(true)">
+                                    <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                                    ABRIR
+                                </button>
+                            </div>
+
+                            <!-- <div class="row">
+                                <img src="http://157.245.116.71:3005/view/product/upload_d5e58f71772f295061d16549d780bd50.mp4" alt="">
+                            </div> -->
+
+                            <!-- <video src="http://157.245.116.71:3005/view/product/upload_d5e58f71772f295061d16549d780bd50.mp4" autoplay></video> -->
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+
+                
+                <!-- <div class=" col-xl-3 col-md-6">
+                    <div class=" card card-stats">
+                        <div class=" card-body">
+                            <div class=" row">
+                                <div class=" col">
+                                    <h5 class=" card-title text-uppercase text-muted mb-0">
+                                        Ordenes Completadas
+                                    </h5>
+
+                                    <span class=" h2 font-weight-bold mb-0"> 2,356 </span>
+                                </div>
+
+                                <div class=" col-auto">
+                                    <div class=" icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                        <i class=" ni ni-money-coins"> </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class=" col-xl-3 col-md-6">
+                    <div class=" card card-stats">
+                        <div class=" card-body">
+                            <div class=" row">
+                                <div class=" col">
+                                    <h5 class=" card-title text-uppercase text-muted mb-0">
+                                        Ordenes Canceladas
+                                    </h5>
+
+                                    <span class=" h2 font-weight-bold mb-0"> 924 </span>
+                                </div>
+
+                                <div class=" col-auto">
+                                    <div class=" icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                        <i class=" ni ni-fat-remove"> </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+</div>
