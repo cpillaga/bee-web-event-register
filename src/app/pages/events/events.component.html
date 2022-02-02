@@ -56,7 +56,7 @@
                         <table id="tblProd" class="table align-items-center table-flush sortable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col" class="sort" data-sort="name">Datos</th>
+                                    <th scope="col" class="sort" data-sort="name">Descripción</th>
                                     <th scope="col" class="sort" data-sort="price">Precios</th>
                                     <th scope="col" class="sort" data-sort="category">Categoría</th>
                                     <th scope="col" class="sort" data-sort="proveedor">Proveedor</th>
@@ -66,31 +66,7 @@
                             </thead>
     
                             <tbody class="list" *ngIf="coincidencia == true">
-                                <tr *ngFor="let prod of productos; let i=index;">
-                                    <th class="name">
-                                        <div class="media align-items-center" *ngIf="estadoOptBtn=='Primario'">
-                                            <a *ngIf="!prod.prod_img" class="avatar rounded-circle mr-3">
-                                                <img src="{{ prod.prod_img }}">
-                                            </a>
-                                            <a *ngIf="prod.prod_img" class="avatar rounded-circle mr-3" href="{{prod.prod_img}}" target="_blank">
-                                                <img src="{{ prod.prod_img }}" style="width: 50px; height: 50px; border: solid 1px #B32933;">
-                                            </a>
-                                            <div class="media-body">
-    
-                                                <span class="mb-0 text-sm">{{ prod.prod_codigoBarra }}</span> <br>
-                                                <span class="mb-0 text-sm" style="white-space : normal;">{{ prod.prod_descripcion }}</span> <br>
-                                                <span class="mb-0 text-sm">{{ prod.pres_descripcion }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="media align-items-center" *ngIf="estadoOptBtn =='Secundario'">
-                                            <div class="media-body">
-                                                <span class="mb-0 text-sm">{{ prod.prod_codigoBarra }}</span> <br>
-                                                <span class="mb-0 text-sm" style="white-space : normal;">{{ prod.prod_descripcion }}</span> <br>
-                                                <span class="mb-0 text-sm">{{ prod.pres_descripcion }}</span>
-                                            </div>
-                                        </div>
-                                    </th>
-    
+                                <tr *ngFor="let evt of events; let i=index;">
                                     <th scope="row" class="price">
                                         <div class="media align-items-center">
                                             <div class="media-body">

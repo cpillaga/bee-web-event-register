@@ -201,8 +201,6 @@ export class NewEventComponent implements OnInit {
       this.priceFormGroup.value.percentageDisability = 0;
     }
 
-
-
     this.event.append('category', this.categoryFormGroup.value.categoria);
     this.event.append('nameEvent', this.eventFormGroup.value.nameEvent);
     this.event.append('description', this.eventFormGroup.value.description);
@@ -445,11 +443,9 @@ export class NewEventComponent implements OnInit {
     return this.imgFormGroup.get('imgName');
   }
 
-
   saveLocalities(){
     const description = this.newLocalities.get('description').value;
     const price = this.newLocalities.get('price').value;
-    const amount = this.newLocalities.get('amount').value;
     const type = this.newLocalities.get('type').value;
     const quantity = this.newLocalities.get('quantity').value || 0;
     const rows = this.newLocalities.get('rows').value || 0;
