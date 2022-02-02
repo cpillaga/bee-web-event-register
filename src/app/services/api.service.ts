@@ -78,4 +78,28 @@ export class ApiService {
 
     return this._http.post(url, body, {headers, observe: 'response'});
   }
+
+  generateTickets(body){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + `ticket/register`;
+
+    return this._http.post(url, body, {headers, observe: 'response'});
+  }
+
+  addLocalitiesToEvent(localidades, event){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+  
+    let localities = JSON.parse(localidades); 
+
+    const url = URL_SERVICES + `event/add-localities/${event}`;
+    
+    return this._http.put(url, { localities }, {headers, observe: 'response'});
+  }
 }

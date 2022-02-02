@@ -9,6 +9,7 @@ import { ApiService } from '../../services/api.service';
 export class EventsComponent implements OnInit {
 
   events;
+  coincidencia = false;
 
   constructor(
     private _api: ApiService
@@ -21,7 +22,12 @@ export class EventsComponent implements OnInit {
   getEvent(){
     this._api.getEvent().subscribe(resp => {
       console.log(resp);
-      // this.events = resp;
+      this.events = resp;
+      if(this.events.length > 0){
+        this.coincidencia = true;
+      }else{
+        this.coincidencia = true;
+      }
     });
   }
 }

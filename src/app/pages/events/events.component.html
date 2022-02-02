@@ -19,7 +19,7 @@
         <div class=" col-lg-12 card-wrapper">
             <div class="card md-12">
                 <div class="card-body bg-secondary">
-                    <tabset type="pills" class="nav-fill flex-column flex-md-row">
+                    <!-- <tabset type="pills" class="nav-fill flex-column flex-md-row">
                         <tab>
                             <ng-template tabHeading>
                                 <i *ngIf="loadPlacedOrders" class="fa fa-spinner fa-spin"></i>
@@ -50,9 +50,82 @@
                                 NEGADOS
                             </ng-template>
                         </tab>
-                    </tabset>
+                    </tabset> -->
 
-                    
+                    <div class="table-responsive">
+                        <table id="tblProd" class="table align-items-center table-flush sortable">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" class="sort" data-sort="name">Datos</th>
+                                    <th scope="col" class="sort" data-sort="price">Precios</th>
+                                    <th scope="col" class="sort" data-sort="category">Categoría</th>
+                                    <th scope="col" class="sort" data-sort="proveedor">Proveedor</th>
+                                    <th scope="col" class="sort text-center" data-sort="stock">Stock</th>
+                                    <th scope="col" class="text-right">Acción</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody class="list" *ngIf="coincidencia == true">
+                                <tr *ngFor="let prod of productos; let i=index;">
+                                    <th class="name">
+                                        <div class="media align-items-center" *ngIf="estadoOptBtn=='Primario'">
+                                            <a *ngIf="!prod.prod_img" class="avatar rounded-circle mr-3">
+                                                <img src="{{ prod.prod_img }}">
+                                            </a>
+                                            <a *ngIf="prod.prod_img" class="avatar rounded-circle mr-3" href="{{prod.prod_img}}" target="_blank">
+                                                <img src="{{ prod.prod_img }}" style="width: 50px; height: 50px; border: solid 1px #B32933;">
+                                            </a>
+                                            <div class="media-body">
+    
+                                                <span class="mb-0 text-sm">{{ prod.prod_codigoBarra }}</span> <br>
+                                                <span class="mb-0 text-sm" style="white-space : normal;">{{ prod.prod_descripcion }}</span> <br>
+                                                <span class="mb-0 text-sm">{{ prod.pres_descripcion }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="media align-items-center" *ngIf="estadoOptBtn =='Secundario'">
+                                            <div class="media-body">
+                                                <span class="mb-0 text-sm">{{ prod.prod_codigoBarra }}</span> <br>
+                                                <span class="mb-0 text-sm" style="white-space : normal;">{{ prod.prod_descripcion }}</span> <br>
+                                                <span class="mb-0 text-sm">{{ prod.pres_descripcion }}</span>
+                                            </div>
+                                        </div>
+                                    </th>
+    
+                                    <th scope="row" class="price">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <span class="mb-0 text-sm"><strong>Costo: </strong> {{ prod.prod_costoIva.toFixed(2) }}</span> <br>
+                                                <span class="mb-0 text-sm" *ngIf="estadoOptBtn=='Primario'"><strong>PVP:   </strong> {{ prod.prod_pvp.toFixed(2) }}</span> <br>
+                                            </div>
+                                        </div>
+                                    </th>
+    
+                                    <th class="hidden" hidden>{{prod.categoria }}</th>
+                                    <th class="hidden" hidden>{{prod.proveedor }}</th>
+                                    <th class="hidden" hidden>{{prod.presentacion }}</th>
+    
+                                    <th scope="row" class="category">{{prod.cat_descripcion}}</th>
+                                    <th scope="row" class="proveedor" style="white-space : normal;">{{prod.prov_nombre}}</th>
+                                    <th scope="row" class="stock text-center">{{prod.prod_stock}}</th>
+    
+                                    <th class="text-right">
+                                        <div class="media align-items-center">
+                                            <div class="media-body">
+                                                <button class="btn btn-success btn-sm" style="margin-bottom: 5px; margin-right: 0px;" (click)="getData(prod, 1)" data-toggle="modal" data-target="#modalAddCart"> Agregar Stock </button>
+                                                <br>
+                                                <button class="btn btn-primary btn-sm" style="margin-bottom: 5px; margin-right: 0px;" (click)="getData(prod, 2)" data-toggle="modal" data-target="#modalupdProd"> Modificar </button>
+                                               
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+    
+                        <!-- <p class="col-form-label form-control-label" style="margin-top: 10px; text-align: center;" *ngIf="coincidencia == false || productos.length == 0">No se encontró ninguna coincidencia</p> -->
+    
+                    </div>
+                   
                 </div>
             </div>
         </div>

@@ -1,17 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FileUploadValidators } from '@iplab/ngx-file-upload';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../services/api.service';
 import * as mapboxgl from 'mapbox-gl';
-import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import * as moment from 'moment';
-// import 'ol/ol.css';
-// import Map from 'ol/Map';
-// import { Tile } from 'ol/layer';
-// import { OSM } from 'ol/source';
-// import View from 'ol/View';
-
+import { Localidades } from 'src/app/models/localidades';
 
 @Component({
   selector: 'app-new-event',
@@ -32,6 +26,7 @@ export class NewEventComponent implements OnInit {
   imgAdvFormGroup: FormGroup;
   mapFormGroup: FormGroup;
   priceFormGroup: FormGroup;
+  newLocalities: FormGroup;
 
   private filesControl = new FormControl(null, FileUploadValidators.filesLimit(1));
   private filesAdvControl = new FormControl(null, FileUploadValidators.filesLimit(1));
@@ -50,6 +45,14 @@ export class NewEventComponent implements OnInit {
   coordinates;
   
   cont: any[] = [];
+
+  localities: Localidades;
+  listLocalities: Localidades[] = [];
+
+  tickets: any[] = [];
+
+  @Output() enviarLocalidad = new EventEmitter<Localidades>();
+
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -104,11 +107,12 @@ export class NewEventComponent implements OnInit {
     });
 
     this.priceFormGroup = this._formBuilder.group({
-      ageChildren: ['', [Validators.required]],
-      discountDisability: ['', [Validators.required]],
-      discountChildren: ['', [Validators.required]],
-      percentageChildren: ['', [Validators.required]],
-      percentageDisability: ['', [Validators.required]],
+      isFree: ['', [Validators.required]],
+      ageChildren: [''],
+      discountDisability: [''],
+      discountChildren: [''],
+      percentageChildren: [''],
+      percentageDisability: [''],
     });
 
     this.extraFormGroup = this._formBuilder.group({
@@ -131,8 +135,18 @@ export class NewEventComponent implements OnInit {
 
     this.imgAdvFormGroup = this._formBuilder.group({
       img: [this.filesControl],
-      imgName: ['', [Validators.required]]
+      imgName: ['']
     });
+
+    this.newLocalities = this._formBuilder.group({
+      description: ['', [Validators.required]],
+      price: ['', [Validators.required]],
+      type: ['', [Validators.required]],
+      quantity:  ['', [Validators.required]],
+      rows:  ['', [Validators.required]],
+      cols: ['', [Validators.required]],
+      tickets: this._formBuilder.array([])
+    }); 
 
     this.getCategories();
   }
@@ -173,6 +187,22 @@ export class NewEventComponent implements OnInit {
     const startDate = fecha+"T"+startTimeA+":00.000Z";
     const endDate = fecha+"T"+endTimeA+":00.000Z";
 
+    if (this.priceFormGroup.value.isFree == 'false'){
+      this.priceFormGroup.value.discountChildren = 'false';
+      this.priceFormGroup.value.discountDisability = 'false';
+      this.priceFormGroup.value.ageChildren = '0';
+    }
+
+    if (this.priceFormGroup.value.discountChildren == 'false') {
+      this.priceFormGroup.value.percentageChildren = 0;
+    }
+
+    if (this.priceFormGroup.value.discountDisability == 'false') {
+      this.priceFormGroup.value.percentageDisability = 0;
+    }
+
+
+
     this.event.append('category', this.categoryFormGroup.value.categoria);
     this.event.append('nameEvent', this.eventFormGroup.value.nameEvent);
     this.event.append('description', this.eventFormGroup.value.description);
@@ -200,14 +230,14 @@ export class NewEventComponent implements OnInit {
     this._api.postEvent(this.event).subscribe(resp => {
       if (resp.status === 200) {
         console.log(resp.body);
-        this.postAdvertising(resp.body['envent']._id);
+        // this.postAdvertising(resp.body['envent']._id);
+        this.generateTicket(resp.body['event']._id);
       }
     });
   }
 
   postAdvertising(idEvent){
     console.log(this.filesAdv);
-    
 
     for (let i = 0; i < this.filesAdv.length; i++) {
       this.eventAdv.append('advertising', this.filesAdv[i][0]);
@@ -218,6 +248,57 @@ export class NewEventComponent implements OnInit {
       });
     }
     // this.imgAdvFormGroup 
+  }
+
+  addLocalitiesToEvent(event, localities){
+    let localidades = [{
+      localities
+    }];
+    
+    this._api.addLocalitiesToEvent(JSON.stringify(localidades), event ).subscribe(resp => {
+      if (resp.status === 200) {
+        console.log(resp);
+      }
+    });
+  }
+
+  generateTicket(event){
+    for (let i = 0; i < this.listLocalities.length; i++) {
+      if (this.listLocalities[i].type == 'Secuencial') {
+        let body = {
+          event: event,
+          quantity: this.listLocalities[i].quantity,
+        }
+
+        this._api.generateTickets(body).subscribe(resp => {
+          if (resp.status === 200) {
+            this.tickets = resp.body['ticket'];
+            this.listLocalities[i].tickets = this.tickets;
+
+            this.addLocalitiesToEvent(event, this.listLocalities[i]);
+          }else{
+            console.log("Hubo error");
+          }
+        });
+      }else{
+        let body = {
+          event: event,
+          rows: this.listLocalities[i].rows,
+          cols: this.listLocalities[i].cols
+        }
+
+        this._api.generateTickets(body).subscribe(resp => {
+          if (resp.status === 200) {
+            this.tickets = resp.body['ticket'];
+            this.listLocalities[i].tickets = this.tickets;
+            
+            this.addLocalitiesToEvent(event, this.listLocalities[i]);
+          }else{
+            console.log("Hubo error");
+          }
+        });
+      }
+    }
   }
 
 	onSelect(event) {
@@ -301,6 +382,10 @@ export class NewEventComponent implements OnInit {
   }
 
   //Atributos priceFormGroup
+  get isFree() {
+    return this.priceFormGroup.get('isFree');
+  }
+
   get ageChildren() {
     return this.priceFormGroup.get('ageChildren');
   }
@@ -358,5 +443,40 @@ export class NewEventComponent implements OnInit {
 
   get imgName() {
     return this.imgFormGroup.get('imgName');
+  }
+
+
+  saveLocalities(){
+    const description = this.newLocalities.get('description').value;
+    const price = this.newLocalities.get('price').value;
+    const amount = this.newLocalities.get('amount').value;
+    const type = this.newLocalities.get('type').value;
+    const quantity = this.newLocalities.get('quantity').value || 0;
+    const rows = this.newLocalities.get('rows').value || 0;
+    const cols = this.newLocalities.get('cols').value || 0;
+
+    if (type == "Secuencial") {
+      const stock = quantity;
+      const amount = quantity;
+      this.localities = new Localidades(description, price, amount, stock, type, quantity, 0, 0);
+    }else{
+      const stock = Number(rows) * Number(cols);
+      const amount = Number(rows) * Number(cols);
+      this.localities = new Localidades(description, price, amount, stock, type, 0, rows, cols);
+    }
+
+    // console.log(pregunta);
+    this.enviarLocalidad.emit(this.localities);
+    this.listLocalities.push(this.localities);
+
+    this.reset();
+  }
+
+  reset() {
+    this.newLocalities.reset();
+  }
+
+  deleteLocalities(index){
+    this.listLocalities.splice(index, 1);
   }
 }
