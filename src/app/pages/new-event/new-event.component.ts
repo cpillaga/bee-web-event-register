@@ -6,7 +6,8 @@ import { ApiService } from '../../services/api.service';
 import * as mapboxgl from 'mapbox-gl';
 import * as moment from 'moment';
 import { Localidades } from 'src/app/models/localidades';
-
+import swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-new-event',
   templateUrl: './new-event.component.html',
@@ -51,28 +52,28 @@ export class NewEventComponent implements OnInit {
 
   tickets: any[] = [];
 
+  idEvt;
+  eventData;
+
   @Output() enviarLocalidad = new EventEmitter<Localidades>();
 
 
   constructor(
     private _formBuilder: FormBuilder,
     private _api: ApiService,
-    public _toastr: ToastrService
-  ) { }
+    public _toastr: ToastrService,
+    public route: ActivatedRoute
+  ) {
+    this.idEvt = this.route.snapshot.paramMap.get("idEvent");
+  }
 
   ngOnInit() {
-
-    this.cont.push('1');
-    this.cont.push('1');
-    this.cont.push('1');
-    this.cont.push('1');
-
     this.categories = [
       {
         name: 'Entretenimiento'
       },
       {
-       name: 'Formación Personal' 
+        name: 'Formación Personal' 
       },
       {
         name: 'Concierto'
@@ -91,62 +92,116 @@ export class NewEventComponent implements OnInit {
       }
     ];
 
-    this.categoryFormGroup = this._formBuilder.group({
-      categoria: ['', [Validators.required, Validators.minLength(1)]]
-    });
+    if (this.idEvt) {
+        this._api.getEventById(this.idEvt).subscribe(resp => {
+          this.eventData = resp.body['eventDB'];
+          
+          console.log(this.eventData);
+          
+          for (let i = 0; i < this.categories.length; i++) {
+            if (this.categories[i].name === this.eventData.category) {
+              this.selectCategory(this.categories[i], i);
+            }
+          }
 
-    this.eventFormGroup = this._formBuilder.group({
-      nameEvent: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      place: ['', [Validators.required]],
-      date: ['', [Validators.required]],
-      startTime: ['', [Validators.required]],
-      endTime: ['', [Validators.required]],
-      isAllPublic: ['', [Validators.required]],
-    });
+          this.eventFormGroup = this._formBuilder.group({
+            nameEvent: [this.eventData.nameEvent, [Validators.required]],
+            description: [this.eventData.description, [Validators.required]],
+            city: [this.eventData.city, [Validators.required]],
+            place: [this.eventData.place, [Validators.required]],
+            date: [this.eventData.date.substring(0, 10), [Validators.required]],
+            startTime: [this.eventData.startTime.substring(11, 16), [Validators.required]],
+            endTime: [this.eventData.endTime.substring(11, 16), [Validators.required]],
+            isAllPublic: [this.eventData.isAllPublic, [Validators.required]],
+          });
 
-    this.priceFormGroup = this._formBuilder.group({
-      isFree: ['', [Validators.required]],
-      ageChildren: [''],
-      discountDisability: [''],
-      discountChildren: [''],
-      percentageChildren: [''],
-      percentageDisability: [''],
-    });
+          this.priceFormGroup = this._formBuilder.group({
+            isFree: [this.eventData.isFree, [Validators.required]],
+            ageChildren: [this.eventData.ageChildren],
+            discountDisability: [this.eventData.discountDisability],
+            discountChildren: [this.eventData.discountChildren],
+            percentageChildren: [this.eventData.percentageChildren],
+            percentageDisability: [this.eventData.percentageDisability],
+          });
 
-    this.extraFormGroup = this._formBuilder.group({
-      openingHours: ['', [Validators.required]],
-      hasParking: ['', [Validators.required]],
-      existRequirements: ['', [Validators.required]],
-      requirementsDescription: [''],
-      parkingNumber: [''],
-    });
+          this.extraFormGroup = this._formBuilder.group({
+            openingHours: [this.eventData.openingHours, [Validators.required]],
+            hasParking: [this.eventData.hasParking, [Validators.required]],
+            existRequirements: [this.eventData.existRequirements, [Validators.required]],
+            requirementsDescription: [this.eventData.requirementsDescription],
+            parkingNumber: [this.eventData.parkingNumber],
+          });
 
-    this.mapFormGroup = this._formBuilder.group({
-      lat: ['', [Validators.required]],
-      lng: ['', [Validators.required]],
-    });
+          this.mapFormGroup = this._formBuilder.group({
+            lat: [this.eventData.lat, [Validators.required]],
+            lng: [this.eventData.lng, [Validators.required]],
+          });
 
-    this.imgFormGroup = this._formBuilder.group({
-      img: [this.filesControl],
-      imgName: ['', [Validators.required]]
-    });
+          let filesControl1 = new FormControl(this.eventData.img, FileUploadValidators.filesLimit(1));
 
-    this.imgAdvFormGroup = this._formBuilder.group({
-      img: [this.filesControl],
-      imgName: ['']
-    });
-
-    this.newLocalities = this._formBuilder.group({
-      description: ['', [Validators.required]],
-      price: ['', [Validators.required]],
-      type: ['', [Validators.required]],
-      quantity:  ['', [Validators.required]],
-      rows:  ['', [Validators.required]],
-      cols: ['', [Validators.required]],
-      tickets: this._formBuilder.array([])
-    }); 
+          this.imgFormGroup = this._formBuilder.group({
+            img: [this.filesControl],
+            imgName: ['', [Validators.required]]
+          });
+        });
+    }else{
+      this.categoryFormGroup = this._formBuilder.group({
+        categoria: ['', [Validators.required, Validators.minLength(1)]]
+      });
+  
+      this.eventFormGroup = this._formBuilder.group({
+        nameEvent: ['', [Validators.required]],
+        description: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        place: ['', [Validators.required]],
+        date: ['', [Validators.required]],
+        startTime: ['', [Validators.required]],
+        endTime: ['', [Validators.required]],
+        isAllPublic: ['', [Validators.required]],
+      });
+  
+      this.priceFormGroup = this._formBuilder.group({
+        isFree: ['', [Validators.required]],
+        ageChildren: [''],
+        discountDisability: [''],
+        discountChildren: [''],
+        percentageChildren: [''],
+        percentageDisability: [''],
+      });
+  
+      this.extraFormGroup = this._formBuilder.group({
+        openingHours: ['', [Validators.required]],
+        hasParking: ['', [Validators.required]],
+        existRequirements: ['', [Validators.required]],
+        requirementsDescription: [''],
+        parkingNumber: [''],
+      });
+  
+      this.mapFormGroup = this._formBuilder.group({
+        lat: ['', [Validators.required]],
+        lng: ['', [Validators.required]],
+      });
+  
+      this.imgFormGroup = this._formBuilder.group({
+        img: [this.filesControl],
+        imgName: ['', [Validators.required]]
+      });
+  
+      this.imgAdvFormGroup = this._formBuilder.group({
+        img: [this.filesControl],
+        imgName: ['']
+      });
+  
+      this.newLocalities = this._formBuilder.group({
+        description: ['', [Validators.required]],
+        price: ['', [Validators.required]],
+        type: ['', [Validators.required]],
+        quantity:  ['', [Validators.required]],
+        rows:  ['', [Validators.required]],
+        cols: ['', [Validators.required]],
+        tickets: this._formBuilder.array([])
+      }); 
+    }
 
     this.getCategories();
   }
@@ -174,7 +229,6 @@ export class NewEventComponent implements OnInit {
   
   // SET LAT LNG
   setLatLng(coors: any) {
-    console.log("llego");
     this.mapFormGroup.patchValue({ lat: coors.lat });
     this.mapFormGroup.patchValue({ lng: coors.lng });
   }
@@ -212,6 +266,7 @@ export class NewEventComponent implements OnInit {
     this.event.append('isAllPublic', this.eventFormGroup.value.isAllPublic);
     this.event.append('lat', this.mapFormGroup.value.lat);
     this.event.append('lng', this.mapFormGroup.value.lng);
+    this.event.append('isFree', this.priceFormGroup.value.isFree);
     this.event.append('ageChildren', this.priceFormGroup.value.ageChildren);
     this.event.append('discountDisability', this.priceFormGroup.value.discountDisability);
     this.event.append('discountChildren', this.priceFormGroup.value.discountChildren);
@@ -248,18 +303,6 @@ export class NewEventComponent implements OnInit {
     // this.imgAdvFormGroup 
   }
 
-  addLocalitiesToEvent(event, localities){
-    let localidades = [{
-      localities
-    }];
-    
-    this._api.addLocalitiesToEvent(JSON.stringify(localidades), event ).subscribe(resp => {
-      if (resp.status === 200) {
-        console.log(resp);
-      }
-    });
-  }
-
   generateTicket(event){
     for (let i = 0; i < this.listLocalities.length; i++) {
       if (this.listLocalities[i].type == 'Secuencial') {
@@ -270,10 +313,23 @@ export class NewEventComponent implements OnInit {
 
         this._api.generateTickets(body).subscribe(resp => {
           if (resp.status === 200) {
+            console.log(resp.body['ticket']);
             this.tickets = resp.body['ticket'];
             this.listLocalities[i].tickets = this.tickets;
 
-            this.addLocalitiesToEvent(event, this.listLocalities[i]);
+            delete this.listLocalities[i].rows;
+            delete this.listLocalities[i].cols;
+            delete this.listLocalities[i].quantity;
+            delete this.listLocalities[i].hide;
+            delete this.listLocalities[i].type;
+
+            let localities = [this.listLocalities[i]];
+
+            this._api.addLocalitiesToEvent(JSON.stringify(localities), event ).subscribe(resp => {
+              if (resp.status === 200) {
+                console.log(resp);
+              }
+            });
           }else{
             console.log("Hubo error");
           }
@@ -290,13 +346,37 @@ export class NewEventComponent implements OnInit {
             this.tickets = resp.body['ticket'];
             this.listLocalities[i].tickets = this.tickets;
             
-            this.addLocalitiesToEvent(event, this.listLocalities[i]);
+            delete this.listLocalities[i].rows;
+            delete this.listLocalities[i].cols;
+            delete this.listLocalities[i].quantity;
+            delete this.listLocalities[i].hide;
+            delete this.listLocalities[i].type;
+
+            let localities = [this.listLocalities[i]]
+            
+            this._api.addLocalitiesToEvent(JSON.stringify(localities), event ).subscribe(resp => {
+              if (resp.status === 200) {
+                console.log(resp);
+              }
+            });
           }else{
             console.log("Hubo error");
           }
         });
       }
     }
+  }
+
+  showAlert(type, title, text, classBtn) {
+    swal.fire({
+      title,
+      text,
+      type,
+      buttonsStyling: false,
+      confirmButtonClass: classBtn
+    }).then((_) => {
+      // this.closeDialog();
+    });
   }
 
 	onSelect(event) {
@@ -445,27 +525,34 @@ export class NewEventComponent implements OnInit {
 
   saveLocalities(){
     const description = this.newLocalities.get('description').value;
-    const price = this.newLocalities.get('price').value;
+    const price = Number(this.newLocalities.get('price').value);
     const type = this.newLocalities.get('type').value;
-    const quantity = this.newLocalities.get('quantity').value || 0;
+    const quantity = Number(this.newLocalities.get('quantity').value) || 0;
     const rows = this.newLocalities.get('rows').value || 0;
     const cols = this.newLocalities.get('cols').value || 0;
 
     if (type == "Secuencial") {
-      const stock = quantity;
-      const amount = quantity;
-      this.localities = new Localidades(description, price, amount, stock, type, quantity, 0, 0);
+      const stock = Number(quantity);
+      const amount = Number(quantity);
+      this.localities = new Localidades(description, price, amount, stock, type, quantity, null, null);
     }else{
       const stock = Number(rows) * Number(cols);
       const amount = Number(rows) * Number(cols);
-      this.localities = new Localidades(description, price, amount, stock, type, 0, rows, cols);
+      this.localities = new Localidades(description, price, amount, stock, type, null, rows, cols);
     }
 
-    // console.log(pregunta);
     this.enviarLocalidad.emit(this.localities);
     this.listLocalities.push(this.localities);
 
     this.reset();
+  }
+
+  clean(obj) {
+    for (var propName in obj) { 
+      if (obj[propName] === null || obj[propName] === undefined) {
+        delete obj[propName];
+      }
+    }
   }
 
   reset() {

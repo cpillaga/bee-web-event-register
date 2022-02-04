@@ -154,7 +154,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="eventFormGroup.value.isAllPublic == 'true' && priceFormGroup.value.isFree == 'true'" style="margin-bottom: 15px;">
+                        <div class="col-md-6" *ngIf="eventFormGroup.value.isAllPublic == true && priceFormGroup.value.isFree == false" style="margin-bottom: 15px;">
                           <label class="form-control-label">Hay descuento para niños?</label>
                           <select name="discountChildren" id="discountChildren" class="form-control selectpicker" formControlName="discountChildren">
                             <option value="" hidden>Seleccionar</option>
@@ -167,7 +167,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="priceFormGroup.value.isFree == 'true'">
+                        <div class="col-md-6" *ngIf="priceFormGroup.value.isFree == false">
                           <label class="form-control-label">Hay descuento para personas con discapacidad?</label>
                           <select name="discountDisability" id="discountDisability" class="form-control selectpicker" formControlName="discountDisability">
                             <option value="" hidden>Seleccionar</option>
@@ -180,7 +180,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="eventFormGroup.value.isAllPublic == 'true' && priceFormGroup.value.discountChildren == 'true'" style="margin-bottom: 15px;">
+                        <div class="col-md-6" *ngIf="eventFormGroup.value.isAllPublic == true && priceFormGroup.value.discountChildren == 'true'" style="margin-bottom: 15px;">
                           <label class="form-control-label">Porcetaje descuento niños</label>
                           <input class="form-control" placeholder="Porcentaje descuento" type="text" formControlName="percentageChildren" />
                           <small *ngIf="percentageChildren.errors && percentageChildren.touched" class="text-danger">
@@ -188,7 +188,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="priceFormGroup.value.discountDisability == 'true'">
+                        <div class="col-md-6" *ngIf="priceFormGroup.value.discountDisability == true">
                           <label class="form-control-label">Porcentaje descuento personas con discapacidad</label>
                           <input class="form-control" placeholder="Porcentaje descuento" type="text" formControlName="percentageDisability" />
                           <small *ngIf="percentageDisability.errors && percentageDisability.touched" class="text-danger">
@@ -196,7 +196,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="eventFormGroup.value.isAllPublic == 'true' && priceFormGroup.value.isFree == 'true'" style="margin-bottom: 15px;">
+                        <div class="col-md-6" *ngIf="eventFormGroup.value.isAllPublic == true && priceFormGroup.value.isFree == false" style="margin-bottom: 15px;">
                           <label class="form-control-label">Edad niños</label>
                           <input class="form-control" placeholder="Edad niños" type="text" formControlName="ageChildren" />
                           <small *ngIf="ageChildren.errors && ageChildren.touched" class="text-danger">
@@ -246,7 +246,7 @@
                     
                     <div class="col-md-12" style="margin-top: 15px;">
                       <div class="row">
-                        <div class="col-md-6" *ngIf="extraFormGroup.value.hasParking == 'true'">
+                        <div class="col-md-6" *ngIf="extraFormGroup.value.hasParking == true">
                           <label class="form-control-label">Número de puestos</label>
                           <input class="form-control" placeholder="Número de puestos" type="text" formControlName="parkingNumber" />
                           <small *ngIf="parkingNumber.errors && parkingNumber.touched" class="text-danger">
@@ -269,7 +269,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-12" style="margin-top: 15px;" *ngIf="extraFormGroup.value.existRequirements == 'true'">
+                    <div class="col-md-12" style="margin-top: 15px;" *ngIf="extraFormGroup.value.existRequirements == true">
                       <div class="row">
                         <div class="col-md-12">
                           <label class="form-control-label">Descripción requerimientos</label>
@@ -358,7 +358,7 @@
                 </div>
               </mat-step>
 
-              <mat-step label="Publicidad" state="image" [stepControl]="imgAdvFormGroup">
+              <!-- <mat-step label="Publicidad" state="image" [stepControl]="imgAdvFormGroup">
                 <form [formGroup]="imgAdvFormGroup" id="div1" style="height: 460px; padding-top: 10px;" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-12">
@@ -385,9 +385,9 @@
                   <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
                   <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
                 </div>
-              </mat-step>
+              </mat-step> -->
 
-              <mat-step label="Localidades" state="image" >
+              <mat-step label="Localidades" state="image" *ngIf="priceFormGroup.value.isFree == 'false'">
                 
                 <div class="col-md-12">
                   <div class="row">

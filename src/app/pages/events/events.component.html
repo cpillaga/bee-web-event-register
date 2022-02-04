@@ -51,57 +51,48 @@
                             </ng-template>
                         </tab>
                     </tabset> -->
+<!-- 
+                    <div class="p-4">
+                        <input type="text" class="form-control form-control-alternative"
+                            (input)="searchProduct($event.target.value)" placeholder="Buscar..." />
+                    </div> -->
 
-                    <div class="table-responsive">
-                        <table id="tblProd" class="table align-items-center table-flush sortable">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col" class="sort" data-sort="name">Descripción</th>
-                                    <th scope="col" class="sort" data-sort="price">Precios</th>
-                                    <th scope="col" class="sort" data-sort="category">Categoría</th>
-                                    <th scope="col" class="sort" data-sort="proveedor">Proveedor</th>
-                                    <th scope="col" class="sort text-center" data-sort="stock">Stock</th>
-                                    <th scope="col" class="text-right">Acción</th>
-                                </tr>
-                            </thead>
-    
-                            <tbody class="list" *ngIf="coincidencia == true">
-                                <tr *ngFor="let evt of events; let i=index;">
-                                    <th scope="row" class="price">
-                                        <div class="media align-items-center">
-                                            <div class="media-body">
-                                                <span class="mb-0 text-sm"><strong>Costo: </strong> {{ prod.prod_costoIva.toFixed(2) }}</span> <br>
-                                                <span class="mb-0 text-sm" *ngIf="estadoOptBtn=='Primario'"><strong>PVP:   </strong> {{ prod.prod_pvp.toFixed(2) }}</span> <br>
-                                            </div>
+                    <div class="row">
+                        <div class="col-xl-4" *ngFor="let evt of events">
+                            <div class="card" style="border-radius: 10%;" title="{{ evt.nameEvent }}">
+                                <div class="card-header">
+                                    <div class="row align-items-center">
+                                        <div class=" col-md-8" >
+                                            <h5 class=" h3" style="padding-top: -12px; font-size: 14px;">
+                                                {{ evt.nameEvent.substring(0,19) }}
+                                            </h5>
                                         </div>
-                                    </th>
-    
-                                    <th class="hidden" hidden>{{prod.categoria }}</th>
-                                    <th class="hidden" hidden>{{prod.proveedor }}</th>
-                                    <th class="hidden" hidden>{{prod.presentacion }}</th>
-    
-                                    <th scope="row" class="category">{{prod.cat_descripcion}}</th>
-                                    <th scope="row" class="proveedor" style="white-space : normal;">{{prod.prov_nombre}}</th>
-                                    <th scope="row" class="stock text-center">{{prod.prod_stock}}</th>
-    
-                                    <th class="text-right">
-                                        <div class="media align-items-center">
-                                            <div class="media-body">
-                                                <button class="btn btn-success btn-sm" style="margin-bottom: 5px; margin-right: 0px;" (click)="getData(prod, 1)" data-toggle="modal" data-target="#modalAddCart"> Agregar Stock </button>
-                                                <br>
-                                                <button class="btn btn-primary btn-sm" style="margin-bottom: 5px; margin-right: 0px;" (click)="getData(prod, 2)" data-toggle="modal" data-target="#modalupdProd"> Modificar </button>
-                                               
-                                            </div>
+                                        <div class=" col-md-4 text-right">
+                                            <p *ngIf="evt.available" class=" icon icon-shape bg-gradient-green text-white rounded-circle shadow"></p>
+                                            <p *ngIf="!evt.available" class=" icon icon-shape bg-gradient-red text-white rounded-circle shadow"></p>
                                         </div>
-                                    </th>
-                                </tr>
-                            </tbody>
-                        </table>
-    
-                        <!-- <p class="col-form-label form-control-label" style="margin-top: 10px; text-align: center;" *ngIf="coincidencia == false || productos.length == 0">No se encontró ninguna coincidencia</p> -->
-    
+                                    </div>
+                                </div>
+                                <div class=" card-body">
+                                    <div class="text-center">
+                                        <img alt="Image placeholder" class="image--pr" src="{{url}}view/event/{{evt.img}}" style="object-fit: contain;" />
+                                    </div>
+                                    
+                                    <div class="text-center" style="height: 60px;">
+                                        <p>
+                                            {{evt.description}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer" style="margin-top: -50px;">
+                                    <div class="boton" style="color: white; font-weight: bold; cursor: pointer;" routerLink="/new-event/{{evt._id}}">
+                                        Editar
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                   
                 </div>
             </div>
         </div>
@@ -109,7 +100,6 @@
 </div>
 
 <div class="fab-container">
-    <!-- (click)="addProductModal()"  -->
     <button mat-fab style="background: #f6c042" routerLink="/new-event" matTooltip="Agregar Evento"
         matTooltipPosition="left">
         <mat-icon>add</mat-icon>

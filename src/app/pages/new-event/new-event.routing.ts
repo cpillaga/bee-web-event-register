@@ -1,10 +1,14 @@
 import { Routes } from '@angular/router';
 import { NewEventComponent } from './new-event.component';
 
-export const NewEventRoutes: Routes = [{
-    path: '',
-    children: [{
+export const NewEventRoutes: Routes = [
+    {
         path: '',
-        component: NewEventComponent
-    }]
-}]
+        children: [
+            { 
+                path: '', 
+                component: NewEventComponent
+            },
+        ]
+    }
+]

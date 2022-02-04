@@ -37,6 +37,10 @@ const routes: Routes = [
         loadChildren: './pages/new-event/new-event.module#NewEventModule'
       },
       {
+        path: 'new-event/:idEvent',
+        loadChildren: './pages/new-event/new-event.module#NewEventModule'
+      },
+      {
         path: 'resume',
         loadChildren: './pages/resume/resume.module#ResumeModule'
       },

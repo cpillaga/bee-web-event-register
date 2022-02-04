@@ -6,7 +6,7 @@ import { URL_SERVICES } from '../configurations/url.service';
   providedIn: 'root'
 })
 export class ApiService {
-  idEmpresa = localStorage.getItem('idEmpresa');
+  idOrganizer = localStorage.getItem('idOrganizer');
   
   constructor(private _http: HttpClient) { }
 
@@ -52,7 +52,7 @@ export class ApiService {
       Authorization: this.getToken()
     });
 
-    const url = URL_SERVICES + 'event/organizer/' + this.idEmpresa;
+    const url = URL_SERVICES + 'event/organizer/' + this.idOrganizer;
     
     return this._http.get(url, {headers, observe: 'response'});
   }
@@ -98,8 +98,20 @@ export class ApiService {
   
     let localities = JSON.parse(localidades); 
 
+    console.log(localities);
     const url = URL_SERVICES + `event/add-localities/${event}`;
     
     return this._http.put(url, { localities }, {headers, observe: 'response'});
+  }
+
+  getEventById(idEvent){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + 'event-event/' + idEvent;
+    
+    return this._http.get(url, {headers, observe: 'response'});
   }
 }

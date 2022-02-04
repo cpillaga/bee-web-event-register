@@ -62,11 +62,13 @@ export class MapCardComponent implements OnInit {
       if (this.markerVectorLayer !== undefined) {
         this.clearMarker();
       }
+
       const coors = transform(event.coordinate, 'EPSG:3857', 'EPSG:4326');
       this.coorsEmit.emit({
         lat: coors[1],
         lng: coors[0]
       });
+
       this.setMarker(event.coordinate);
     });
   }
