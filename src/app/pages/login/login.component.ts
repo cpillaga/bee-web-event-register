@@ -70,6 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['/home']);
       }
     }, (_) => {
+      this.showAlert('error', 'Error', 'Correo o contraseña icorrectos!', 'btn btn-primary');
       this.loading = false;
     });
   }
