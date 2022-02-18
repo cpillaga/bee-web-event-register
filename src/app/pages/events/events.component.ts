@@ -13,7 +13,7 @@ export class EventsComponent implements OnInit {
   events;
   coincidencia = false;
   url = URL_SERVICES;
-
+  
   constructor(
     private _api: ApiService,
     public router: Router,
@@ -25,14 +25,24 @@ export class EventsComponent implements OnInit {
 
   getEvent(){
     this._api.getEvent().subscribe(resp => {
-      console.log(resp.body['eventDB']);
       this.events = resp.body['eventDB'];
       if(this.events.length > 0){
         this.coincidencia = true;
       }else{
-        this.coincidencia = true;
+        this.coincidencia = false;
       }
     });
   }
 
+  filterEvent(word){
+    if (word == '') {
+      this.getEvent();
+    }else{
+      this._api.filterEvent(word).subscribe(resp => {
+        this.events = resp.body['list'];
+      });
+    }
+  }
+
+ 
 }

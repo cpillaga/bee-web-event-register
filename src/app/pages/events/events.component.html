@@ -51,13 +51,13 @@
                             </ng-template>
                         </tab>
                     </tabset> -->
-<!-- 
+
                     <div class="p-4">
                         <input type="text" class="form-control form-control-alternative"
-                            (input)="searchProduct($event.target.value)" placeholder="Buscar..." />
-                    </div> -->
+                            (input)="filterEvent($event.target.value)" placeholder="Buscar..." />
+                    </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="coincidencia == true">
                         <div class="col-xl-4" *ngFor="let evt of events">
                             <div class="card" style="border-radius: 10%;" title="{{ evt.nameEvent }}">
                                 <div class="card-header">
@@ -92,6 +92,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row" *ngIf="coincidencia == false">
+                        <p>No hay eventos para mostrar</p>
                     </div>
                 </div>
             </div>

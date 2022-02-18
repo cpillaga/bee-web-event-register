@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -53,6 +53,7 @@ export class MapCardComponent implements OnInit {
           minZoom: 7
         })
       });
+
       this.clickMap();
     }, 50);
   }
@@ -73,7 +74,7 @@ export class MapCardComponent implements OnInit {
     });
   }
 
-  setMarker(coordinate) {
+  public setMarker(coordinate) {
     this.source = new VectorSource();
     this.point = new Point(coordinate);
     this.marker = new Feature({
@@ -84,6 +85,22 @@ export class MapCardComponent implements OnInit {
     this.markerVectorLayer = new Vector({
       source: this.source,
     });
+    this.map.addLayer(this.markerVectorLayer);
+  }
+
+  public getMarker(coordinate){
+    this.source = new VectorSource();
+    this.point = new Point(coordinate);
+    this.marker = new Feature({
+      geometry: this.point
+    });
+
+    this.marker.setStyle(this.iconStyle());
+    this.source.addFeature(this.marker);
+    this.markerVectorLayer = new Vector({
+      source: this.source,
+    });
+
     this.map.addLayer(this.markerVectorLayer);
   }
 

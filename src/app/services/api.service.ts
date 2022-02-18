@@ -98,7 +98,6 @@ export class ApiService {
   
     let localities = JSON.parse(localidades); 
 
-    console.log(localities);
     const url = URL_SERVICES + `event/add-localities/${event}`;
     
     return this._http.put(url, { localities }, {headers, observe: 'response'});
@@ -111,6 +110,17 @@ export class ApiService {
     });
 
     const url = URL_SERVICES + 'event-event/' + idEvent;
+    
+    return this._http.get(url, {headers, observe: 'response'});
+  }
+
+  filterEvent(word){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + 'events/filter-events/' + this.idOrganizer + '/' + word;
     
     return this._http.get(url, {headers, observe: 'response'});
   }

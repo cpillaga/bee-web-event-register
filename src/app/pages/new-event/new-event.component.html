@@ -154,7 +154,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="eventFormGroup.value.isAllPublic == true && priceFormGroup.value.isFree == false" style="margin-bottom: 15px;">
+                        <div class="col-md-6" *ngIf="(eventFormGroup.value.isAllPublic == true || eventFormGroup.value.isAllPublic == 'true' ) && (priceFormGroup.value.isFree == false || priceFormGroup.value.isFree == 'false')" style="margin-bottom: 15px;">
                           <label class="form-control-label">Hay descuento para niños?</label>
                           <select name="discountChildren" id="discountChildren" class="form-control selectpicker" formControlName="discountChildren">
                             <option value="" hidden>Seleccionar</option>
@@ -167,7 +167,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="priceFormGroup.value.isFree == false">
+                        <div class="col-md-6" *ngIf="priceFormGroup.value.isFree == false || priceFormGroup.value.isFree == 'false'">
                           <label class="form-control-label">Hay descuento para personas con discapacidad?</label>
                           <select name="discountDisability" id="discountDisability" class="form-control selectpicker" formControlName="discountDisability">
                             <option value="" hidden>Seleccionar</option>
@@ -180,7 +180,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="eventFormGroup.value.isAllPublic == true && priceFormGroup.value.discountChildren == 'true'" style="margin-bottom: 15px;">
+                        <div class="col-md-6" *ngIf="(eventFormGroup.value.isAllPublic == true || eventFormGroup.value.isAllPublic == 'true') && (priceFormGroup.value.discountChildren == 'true' || priceFormGroup.value.discountChildren == true)" style="margin-bottom: 15px;">
                           <label class="form-control-label">Porcetaje descuento niños</label>
                           <input class="form-control" placeholder="Porcentaje descuento" type="text" formControlName="percentageChildren" />
                           <small *ngIf="percentageChildren.errors && percentageChildren.touched" class="text-danger">
@@ -188,7 +188,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="priceFormGroup.value.discountDisability == true">
+                        <div class="col-md-6" *ngIf="priceFormGroup.value.discountDisability == true || priceFormGroup.value.discountDisability == 'true'">
                           <label class="form-control-label">Porcentaje descuento personas con discapacidad</label>
                           <input class="form-control" placeholder="Porcentaje descuento" type="text" formControlName="percentageDisability" />
                           <small *ngIf="percentageDisability.errors && percentageDisability.touched" class="text-danger">
@@ -196,7 +196,7 @@
                           </small>
                         </div>
 
-                        <div class="col-md-6" *ngIf="eventFormGroup.value.isAllPublic == true && priceFormGroup.value.isFree == false" style="margin-bottom: 15px;">
+                        <div class="col-md-6" *ngIf="(eventFormGroup.value.isAllPublic == true || eventFormGroup.value.isAllPublic == 'true' ) && (priceFormGroup.value.isFree == false || priceFormGroup.value.isFree == 'false')" style="margin-bottom: 15px;">
                           <label class="form-control-label">Edad niños</label>
                           <input class="form-control" placeholder="Edad niños" type="text" formControlName="ageChildren" />
                           <small *ngIf="ageChildren.errors && ageChildren.touched" class="text-danger">
@@ -246,7 +246,7 @@
                     
                     <div class="col-md-12" style="margin-top: 15px;">
                       <div class="row">
-                        <div class="col-md-6" *ngIf="extraFormGroup.value.hasParking == true">
+                        <div class="col-md-6" *ngIf="extraFormGroup.value.hasParking == true || extraFormGroup.value.hasParking == 'true'">
                           <label class="form-control-label">Número de puestos</label>
                           <input class="form-control" placeholder="Número de puestos" type="text" formControlName="parkingNumber" />
                           <small *ngIf="parkingNumber.errors && parkingNumber.touched" class="text-danger">
@@ -269,7 +269,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-12" style="margin-top: 15px;" *ngIf="extraFormGroup.value.existRequirements == true">
+                    <div class="col-md-12" style="margin-top: 15px;" *ngIf="extraFormGroup.value.existRequirements == true || extraFormGroup.value.existRequirements == 'true'">
                       <div class="row">
                         <div class="col-md-12">
                           <label class="form-control-label">Descripción requerimientos</label>
@@ -299,13 +299,14 @@
                             matTooltip="- Marca la uicación precisa del evento haciendo click en el mapa."
                             matTooltipPosition="right"></i></label>
                     <app-map-card (coorsEmit)="setLatLng($event)"></app-map-card>
+                    
                   </div>
 
                   <div class="col-md-12">
                     <div class="row">
                       <div class="col-md-6">
                         <label class="form-control-label">Latitud</label>
-                        <input class="form-control" placeholder="Latitud" type="text" formControlName="lat" required="true" />
+                        <input class="form-control" placeholder="Latitud" type="text" formControlName="lat" required="true" (keypress)="validarCampoLngLat($event)" />
                         <small *ngIf="lat.errors && lat.touched" class="text-danger">
                             * Latitud requerido
                         </small>
@@ -313,7 +314,7 @@
 
                       <div class="col-md-6">
                         <label class="form-control-label">Longitud</label>
-                        <input class="form-control" placeholder="Longitud" type="text" formControlName="lng" required="true" />
+                        <input class="form-control" placeholder="Longitud" type="text" formControlName="lng" required="true" (keypress)="validarCampoLngLat($event)" />
                         <small *ngIf="lng.errors && lng.touched" class="text-danger">
                             * Longitud requerido
                         </small>
@@ -336,7 +337,7 @@
                       <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
                         <ngx-dropzone-label>
                           <div>
-                            <img src="assets/img/icons/upload.png" width="64px" height="64px">
+                            <img  src="assets/img/icons/upload.png" width="64px" height="64px">
                             <h3 style="color: #000;">Sube una nueva imagen o conserva la que tienes</h3>
                             <h3 style="color: #000;">Has click para buscar una imagen</h3>
                           </div>

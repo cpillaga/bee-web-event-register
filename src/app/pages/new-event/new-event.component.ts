@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FileUploadValidators } from '@iplab/ngx-file-upload';
 import { ToastrService } from 'ngx-toastr';
@@ -7,7 +7,9 @@ import * as mapboxgl from 'mapbox-gl';
 import * as moment from 'moment';
 import { Localidades } from 'src/app/models/localidades';
 import swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MapCardComponent } from '../../components/map-card/map-card.component';
+import { URL_SERVICES } from '../../configurations/url.service';
 @Component({
   selector: 'app-new-event',
   templateUrl: './new-event.component.html',
@@ -35,6 +37,8 @@ export class NewEventComponent implements OnInit {
   files: File[] = [];
   filesAdv: File[] = [];
 
+  url = URL_SERVICES;
+
   event = new FormData();
   eventAdv = new FormData();
 
@@ -57,12 +61,12 @@ export class NewEventComponent implements OnInit {
 
   @Output() enviarLocalidad = new EventEmitter<Localidades>();
 
-
   constructor(
     private _formBuilder: FormBuilder,
     private _api: ApiService,
     public _toastr: ToastrService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private router: Router,
   ) {
     this.idEvt = this.route.snapshot.paramMap.get("idEvent");
   }
@@ -91,12 +95,10 @@ export class NewEventComponent implements OnInit {
         name: 'Otros'
       }
     ];
-
+    
     if (this.idEvt) {
         this._api.getEventById(this.idEvt).subscribe(resp => {
           this.eventData = resp.body['eventDB'];
-          
-          console.log(this.eventData);
           
           for (let i = 0; i < this.categories.length; i++) {
             if (this.categories[i].name === this.eventData.category) {
@@ -136,13 +138,31 @@ export class NewEventComponent implements OnInit {
             lat: [this.eventData.lat, [Validators.required]],
             lng: [this.eventData.lng, [Validators.required]],
           });
-
-          let filesControl1 = new FormControl(this.eventData.img, FileUploadValidators.filesLimit(1));
+          
+          this.files[0] = this.eventData.img;
+          let filesControl1 = new FormControl(`${this.url}view/event/${this.files[0]}`, FileUploadValidators.filesLimit(1));
 
           this.imgFormGroup = this._formBuilder.group({
-            img: [this.filesControl],
+            img: [filesControl1],
             imgName: ['', [Validators.required]]
           });
+
+          if (this.priceFormGroup.value.isFree == true) {
+            for (let i = 0; i < this.eventData.localities.length; i++) {
+              this.newLocalities = this._formBuilder.group({
+                description: [this.eventData.localities[i].description, [Validators.required]],
+                price: [this.eventData.localities[i].price, [Validators.required]],
+                type: [this.eventData.localities[i].type, [Validators.required]],
+                quantity:  [this.eventData.localities[i].amount, [Validators.required]],
+              }); 
+
+              this.saveLocalities();
+            }
+            
+
+
+          }
+
         });
     }else{
       this.categoryFormGroup = this._formBuilder.group({
@@ -210,6 +230,23 @@ export class NewEventComponent implements OnInit {
       for (let i = 0; i < this.categories.length; i++) {
         this.active[i] = 'inactive';
       }
+  }
+
+  validarCampoLngLat(evt){
+    // code is the decimal ASCII representation of the pressed key.
+    var code = (evt.which) ? evt.which : evt.keyCode;
+  
+    if(code==45) { // signo menos.
+      return true;
+    }else if(code==46){
+      return true;
+    } else if(code>=48 && code<=57) { // is a number.
+      return true;
+    } else{ // other keys.
+      this.showAlert('error', 'Error', 'Debe ingresar solo números ó utilizar punto(.) para decimales', 'btn btn-secondary')
+      return false;
+    }
+  
   }
 
   selectCategory(cat, index){
@@ -282,7 +319,6 @@ export class NewEventComponent implements OnInit {
 
     this._api.postEvent(this.event).subscribe(resp => {
       if (resp.status === 200) {
-        console.log(resp.body);
         // this.postAdvertising(resp.body['envent']._id);
         this.generateTicket(resp.body['event']._id);
       }
@@ -290,8 +326,6 @@ export class NewEventComponent implements OnInit {
   }
 
   postAdvertising(idEvent){
-    console.log(this.filesAdv);
-
     for (let i = 0; i < this.filesAdv.length; i++) {
       this.eventAdv.append('advertising', this.filesAdv[i][0]);
       this.eventAdv.append('event', idEvent);
@@ -304,6 +338,8 @@ export class NewEventComponent implements OnInit {
   }
 
   generateTicket(event){
+    let cont = 0;
+
     for (let i = 0; i < this.listLocalities.length; i++) {
       if (this.listLocalities[i].type == 'Secuencial') {
         let body = {
@@ -313,7 +349,6 @@ export class NewEventComponent implements OnInit {
 
         this._api.generateTickets(body).subscribe(resp => {
           if (resp.status === 200) {
-            console.log(resp.body['ticket']);
             this.tickets = resp.body['ticket'];
             this.listLocalities[i].tickets = this.tickets;
 
@@ -327,11 +362,16 @@ export class NewEventComponent implements OnInit {
 
             this._api.addLocalitiesToEvent(JSON.stringify(localities), event ).subscribe(resp => {
               if (resp.status === 200) {
-                console.log(resp);
+                cont = cont + 1;
+
+                if(cont ===  this.listLocalities.length){
+                  this.eventCreateAlert('success', 'Correcto', 'Se ha creado correctamente el evento', 'btn btn-primary');
+                }
               }
             });
           }else{
-            console.log("Hubo error");
+            this.showAlert('error', 'Error', 'Algo ha salido mal', 'btn btn-default');
+            return;
           }
         });
       }else{
@@ -356,11 +396,16 @@ export class NewEventComponent implements OnInit {
             
             this._api.addLocalitiesToEvent(JSON.stringify(localities), event ).subscribe(resp => {
               if (resp.status === 200) {
-                console.log(resp);
+                cont = cont + 1;
+
+                if(cont ===  this.listLocalities.length){
+                  this.eventCreateAlert('success', 'Correcto', 'Se ha creado correctamente el evento', 'btn btn-primary');
+                }
               }
             });
           }else{
-            console.log("Hubo error");
+            this.showAlert('error', 'Error', 'Algo ha salido mal', 'btn btn-default');
+            return;
           }
         });
       }
@@ -376,6 +421,18 @@ export class NewEventComponent implements OnInit {
       confirmButtonClass: classBtn
     }).then((_) => {
       // this.closeDialog();
+    });
+  }
+
+  eventCreateAlert(type, title, text, classBtn) {
+    swal.fire({
+      title,
+      text,
+      type,
+      buttonsStyling: false,
+      confirmButtonClass: classBtn
+    }).then((_) => {
+      this.router.navigate(['/event']);
     });
   }
 
@@ -417,7 +474,6 @@ export class NewEventComponent implements OnInit {
 	}
 
 	onRemoveAdv(event) {
-		console.log(event);
 		this.filesAdv.splice(this.filesAdv.indexOf(event), 1);
 	}
 
