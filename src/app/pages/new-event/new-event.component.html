@@ -477,7 +477,10 @@
                 <div>
                   <br>
                   <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
-                  <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;" (click)="postEvent()">Finalizar</button>
+                  <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;" (click)="postEvent()">
+                    <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                    Finalizar
+                  </button>
                   <!-- <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;" (click)="generateTicket('12')">Finalizar</button> -->
                 </div>
               </mat-step>

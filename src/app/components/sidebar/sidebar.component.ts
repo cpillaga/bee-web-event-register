@@ -49,6 +49,12 @@ export const ROUTES: RouteInfo[] = [
     icontype: 'fa fa-tags text-primary'
   },
   {
+    path: '/stories',
+    title: 'Historias',
+    type: 'link',
+    icontype: 'fa fa-tags text-yellow'
+  },
+  {
     path: '/resume',
     title: 'Resumen',
     type: 'link',

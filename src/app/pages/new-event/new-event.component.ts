@@ -59,6 +59,7 @@ export class NewEventComponent implements OnInit {
   idEvt;
   eventData;
 
+  loading = false;
   @Output() enviarLocalidad = new EventEmitter<Localidades>();
 
   constructor(
@@ -271,6 +272,7 @@ export class NewEventComponent implements OnInit {
   }
 
   postEvent(){
+    this.loading = true;
     const fecha = moment(this.eventFormGroup.value.date).format('YYYY-MM-DD');
     const startTimeA = this.eventFormGroup.value.startTime;
     const endTimeA = this.eventFormGroup.value.endTime;

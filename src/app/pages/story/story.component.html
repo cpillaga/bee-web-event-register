@@ -1,0 +1,128 @@
+<div class="header bg-cyan pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-tags"> </i>
+                    </a>
+                    <span> - </span>
+                    <h6 class="h2 text-white d-inline-block mb-0">Historias</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+    <div class="row justify-content-center">
+        <div class="col-lg-12 card-wrapper">
+            <div class="card">
+                <div class="card-body bg-secondary">
+                    <h3 style="text-align: center;" *ngIf="imgStory.length == 0">No existen historias para mostrar</h3>
+                    <div class="p-4 animated fadeIn" *ngIf="imgStory.length > 0">
+                        <div class="col-md-12 ">
+                            <div class="row">
+                                <div class="col-xl-3" style="margin-top: 20px;" *ngFor="let imagen of imgStory">
+                                    <div class="text-center" style="height: 150px;">
+                                        <a *ngIf="imagen.fileType == 'imagen'" href="{{url}}view/stories/{{imagen.img}}" target="_blank">
+                                            <img  class="image--pr card-story" src="{{url}}view/stories/{{imagen.img}}" style="object-fit: contain;" />
+                                        </a>
+                                        <a *ngIf="imagen.fileType == 'video'" href="{{url}}view/stories/{{imagen.img}}" target="_blank">
+                                            <video  class="image--pr card-story" src="{{url}}view/stories/{{imagen.img}}" autoplay  style="object-fit: contain;"></video>
+                                        </a>
+                                    </div>
+                                    <div class="text-center" style="margin-top: 10px;">
+                                        <button class="btn btn-primary btn-sm" title="Eliminar" (click)="deleteStories(imagen._id)">
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fab-container">
+    <button mat-fab style="background: #f6c042" data-toggle="modal" (click)="reset()" data-target="#ModalAddStory"  matTooltip="Agregar Historias"
+        matTooltipPosition="left">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<div class="modal fade" id="ModalAddStory" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-default">Agregar Historia</h6>
+                <button type="button" #closebuttonadd class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form class="form-horizontal" [formGroup]="formImg">
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4" style="text-align: center;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="custom-control custom-radio mb-3">
+                                               <input name="custom-radio-1" class="custom-control-input" (click)="cambiarOpt('imagen')" checked="" id="customRadio5" type="radio">
+                                               <label class="custom-control-label" for="customRadio5">Imagen</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="custom-control custom-radio mb-3">
+                                                <input name="custom-radio-1" class="custom-control-input" (click)="cambiarOpt('video')" id="customRadio6" type="radio">
+                                                <label class="custom-control-label" for="customRadio6">Video</label>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="custom-dropzone" ngx-dropzone [accept]="controlAccept" [maxFileSize]="'10000000'" (change)="onSelect($event)">
+                                <ngx-dropzone-label >
+                                    <div>
+                                        <img src="assets/img/icons/upload.png" width="64px" height="64px">
+                                        <h3 style="color: #000; margin-top: 10px;">Subir nuevo archivo ({{ controlOpt }}) o conservar el que tienes</h3>
+                                        <h3 style="color: #000;">Has click para buscar archivos ({{ controlOpt }})</h3>
+                                    </div>
+                                </ngx-dropzone-label>
+                                <div *ngIf="controlOpt == 'imagen'">
+                                    <ngx-dropzone-image-preview class="center" id="preview" ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f[0]" [removable]="true" (removed)="onRemove(f[0])">
+                                    </ngx-dropzone-image-preview>
+                                </div>
+                
+                                <div *ngIf="controlOpt == 'video'">
+                                    <ngx-dropzone-video-preview  class="center" id="preview" ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f[0]" [removable]="true" (removed)="onRemove(f[0])">
+                                        <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                                    </ngx-dropzone-video-preview>
+                                </div>
+                               
+                            </div>
+                            <input type="hidden" required formControlName="imgName" id="imgName" name="imgName">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-md"  [disabled]="loading" (click)="saveStories()">
+                        <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                        Guardar
+                    </button>
+                </div>
+            </form>            
+        </div>
+    </div>
+</div>

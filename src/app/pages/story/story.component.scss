@@ -1,0 +1,108 @@
+#div1 {
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 329px;
+    width: 100%;
+}
+
+#div1::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+#div1::-webkit-scrollbar:vertical {
+    width:10px;
+}
+
+#div1::-webkit-scrollbar-button:increment,#div1::-webkit-scrollbar-button {
+    display: none;
+} 
+
+#div1::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+#div1::-webkit-scrollbar-thumb {
+    background-color: #797979;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+#div1::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}
+  
+
+ngx-dropzone,
+.custom-dropzone {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.custom-dropzone {
+    height: 250px;
+    width: 500px;
+    // background: #ced4da;
+    background: #fff;
+    color: #000;
+    border: 5px dashed #fff;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px 1px #ced4da;
+    font-size: 20px; 
+    padding-top: 30px;
+}
+
+
+.custom-dropzone.ngx-dz-hovered {
+    border: 5px solid rgb(0,0,0);
+}
+  
+#preview {
+    display: flex;
+    height: 180px;
+    min-height: 180px;
+    min-width: 300px;
+    max-width: 300px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    // padding: 0px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    position: relative;
+}
+  
+.fab-container {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+
+    >div {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-bottom: 5px;
+
+        button {
+            margin-bottom: 17px;
+        }
+    }
+}
+
+button:focus {
+    outline: none !important;
+    border: 0 !important;
+}
+
+.card-story{
+    border: solid 2px #F6C042;
+    border-radius: 100%;
+    height: 150px;
+    width: 150px;
+}

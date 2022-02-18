@@ -124,4 +124,38 @@ export class ApiService {
     
     return this._http.get(url, {headers, observe: 'response'});
   }
+
+  
+  getStories(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + `shop/story/uploader/${this.idOrganizer}`;
+    
+    return this._http.get(url, {headers, observe: 'response'});
+  }
+
+  saveStories(body: FormData){
+    const headers = new HttpHeaders({
+      enctype: 'multipart/form-data',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + `shop/story`;
+    
+    return this._http.post(url,  body , {headers, observe: 'response'});
+  }
+
+  deleteStories(idStory){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + `shop/story/${idStory}`;
+    
+    return this._http.delete(url, {headers, observe: 'response'});
+  }
 }
