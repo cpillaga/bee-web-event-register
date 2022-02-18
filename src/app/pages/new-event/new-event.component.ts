@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../services/api.service';
 import * as mapboxgl from 'mapbox-gl';
 import * as moment from 'moment';
-import { Localidades } from 'src/app/models/localidades';
+import { Localidades } from 'src/app/models/Localidades';
 import swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MapCardComponent } from '../../components/map-card/map-card.component';
