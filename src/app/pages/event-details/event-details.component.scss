@@ -1,0 +1,146 @@
+#div1 {
+    display: block;
+    overflow-y: auto;
+    height: 371px;
+    width: 100%;
+}
+
+
+#div1::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+#div1::-webkit-scrollbar:vertical {
+    width:10px;
+}
+
+#div1::-webkit-scrollbar-button:increment,#div1::-webkit-scrollbar-button {
+    display: none;
+} 
+
+#div1::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+#div1::-webkit-scrollbar-thumb {
+    background-color: #797979;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+#div1::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}
+
+#div2 {
+    background-color: #FFFFFF !important;
+}
+
+.input-group .form-control:first-child,
+.input-group-addon:first-child,
+.input-group-btn:first-child>.dropdown-toggle,
+.input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle) {
+    border-right: 0 none;
+}
+
+.input-group .form-control:last-child,
+.input-group-addon:last-child,
+.input-group-btn:last-child>.dropdown-toggle,
+.input-group-btn:first-child>.btn:not(:first-child) {
+    border-left: 0 none;
+}
+
+.input-group-addon {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 2px;
+    padding-right: 10px;
+    padding-top: 12px;
+}
+
+.input-group-btn .btn {
+    border-width: 1px;
+    padding: 8px 16px;
+}
+
+.input-group-btn .btn-default:not(.btn-fill) {
+    border-color: #DDDDDD;
+}
+
+.input-group-btn:last-child>.btn {
+    margin-left: 0;
+}
+
+.input-group-focus .input-group-addon {
+    border-color: #AAAAAA;
+}
+
+.form-control:focus+.input-group-addon,
+.form-control:focus~.input-group-addon {
+    background-color: #FFFFFF;
+    border-color: #9A9A9A;
+}
+
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+  
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+  
+.number-input {
+    border: 2px solid #ddd;
+    display: inline-flex;
+}
+  
+.number-input,
+.number-input * {
+    box-sizing: border-box;
+}
+
+  
+.number-input button {
+    outline:none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 22px;
+    cursor: pointer;
+    margin: 0;
+    position: relative;
+}
+  
+.number-input button:before,
+.number-input button:after {
+    display: inline-block;
+    position: absolute;
+    content: '';
+    width: 10px;
+    height: 2px;
+    background-color: #212121;
+    transform: translate(-50%, -50%);
+}
+
+.number-input button.plus:after {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+  
+.number-input input[type=number] {
+    font-family: sans-serif;
+    max-width: 40px;
+    /* padding: .5px; */
+    border: solid #ddd;
+    border-width: 0 2px;
+    font-size: 12px;
+    height: 22px;
+    font-weight: bold;
+    text-align: center;
+}

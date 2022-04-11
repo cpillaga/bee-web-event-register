@@ -29,6 +29,10 @@ const routes: Routes = [
         loadChildren: './pages/home/home.module#HomeModule'
       },
       {
+        path: 'eventDetail/:idEvent',
+        loadChildren: './pages/event-details/event-details.module#EventDetailsModule'
+      },
+      {
         path: 'event',
         loadChildren: './pages/events/events.module#EventsModule'
       },
@@ -39,6 +43,10 @@ const routes: Routes = [
       {
         path: 'new-event/:idEvent',
         loadChildren: './pages/new-event/new-event.module#NewEventModule'
+      },
+      {
+        path: 'sales',
+        loadChildren: './pages/sales/sales.module#SalesModule'
       },
       {
         path: 'stories',

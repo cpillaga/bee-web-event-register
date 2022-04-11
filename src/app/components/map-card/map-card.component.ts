@@ -21,6 +21,7 @@ export class MapCardComponent implements OnInit {
 
   @ViewChild('mapa', {static: false}) mapa;
   @Output() coorsEmit: EventEmitter<any> = new EventEmitter();
+  @Output() coordinate;
 
   map: Map;
   source: any;
@@ -28,11 +29,14 @@ export class MapCardComponent implements OnInit {
   marker: any;
   markerVectorLayer: any;
   tokenMap = 'pk.eyJ1IjoicGxlbWE3MDQiLCJhIjoiY2p4a2o3cmhzMjRleDN0cDZweWJpeWducyJ9.iLAt8_WcAk6ShXSp6FooEg';
+  
+  message:string;
 
   constructor() { }
 
   ngOnInit() {
     this.mapLoad();
+    this.getMarker(this.coordinate);
   }
 
   mapLoad() {
@@ -89,6 +93,7 @@ export class MapCardComponent implements OnInit {
   }
 
   public getMarker(coordinate){
+    console.log("llego en mapCard");
     this.source = new VectorSource();
     this.point = new Point(coordinate);
     this.marker = new Feature({

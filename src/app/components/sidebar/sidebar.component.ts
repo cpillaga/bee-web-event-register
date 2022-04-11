@@ -55,6 +55,12 @@ export const ROUTES: RouteInfo[] = [
     icontype: 'fa fa-tags text-yellow'
   },
   {
+    path: '/sales',
+    title: 'Venta Tickets',
+    type: 'link',
+    icontype: 'fa fa-tags text-yellow'
+  },
+  {
     path: '/resume',
     title: 'Resumen',
     type: 'link',
@@ -84,9 +90,9 @@ export class SidebarComponent implements OnInit {
     this.router.events.subscribe(event => {
       this.isCollapsed = true;
     });
-    this.getNotifications();
-    this.socketService.socketConnect(localStorage.getItem('token-shop'));
-    this.socketData();
+    // this.getNotifications();
+    // this.socketService.socketConnect(localStorage.getItem('token-shop'));
+    // this.socketData();
   }
 
   socketData() {

@@ -57,6 +57,16 @@ export class ApiService {
     return this._http.get(url, {headers, observe: 'response'});
   }
 
+  getEventByCategory(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    const url = URL_SERVICES + `events/filter/Todos?orderAZ=asc`;
+
+    return this._http.get(url, {headers, observe: 'response'});
+  }
+
   postEvent(body: FormData){
     const headers = new HttpHeaders({
       enctype: 'multipart/form-data',
@@ -109,7 +119,7 @@ export class ApiService {
       Authorization: this.getToken()
     });
 
-    const url = URL_SERVICES + 'event-event/' + idEvent;
+    const url = URL_SERVICES + 'event/' + idEvent;
     
     return this._http.get(url, {headers, observe: 'response'});
   }
@@ -124,7 +134,6 @@ export class ApiService {
     
     return this._http.get(url, {headers, observe: 'response'});
   }
-
   
   getStories(){
     const headers = new HttpHeaders({
@@ -157,5 +166,30 @@ export class ApiService {
     const url = URL_SERVICES + `shop/story/${idStory}`;
     
     return this._http.delete(url, {headers, observe: 'response'});
+  }
+
+  getTotalEvent(desde, hasta) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + `event/orders/total/${desde}/${hasta}`;
+
+    return this._http.get(url, { headers, observe: 'response' });
+  }
+
+
+  getReportEvent(id, desde, hasta){
+    // {{url}}/event/orders/sold/localities/total/620fc49fbb6add26b88e3099/2021-06-01T05:00:00.000Z/2022-04-02T05:00:00.000Z
+    
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+ 
+    const url = URL_SERVICES + `event/orders/sold/localities/total/${id}/${desde}/${hasta}`;
+
+    return this._http.get(url, { headers, observe: 'response' });
   }
 }

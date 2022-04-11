@@ -1,15 +1,14 @@
 .active{
-    background-color: #000 !important;
-    color: #F6C042 !important;
-    text-align: center;
+  background-color: #000 !important;
+  color: #F6C042 !important;
+  text-align: center;
 }
 
 .inactive {
-    background-color: #ffffff !important; 
-    color: #000 !important;
-    text-align: center;
+  background-color: #ffffff !important; 
+  color: #000 !important;
+  text-align: center;
 }
-
 
 #div1 {
   display: block;
@@ -158,9 +157,62 @@ textarea {
   resize: none;
 }
 
+.card-wizard .picture-container {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+}
 
-#map { 
-  width: 100%; 
-  height: 100% !important;
-  margin-top: 10px !important;
+.card-wizard .picture {
+  width: auto;
+  height: 250px;
+  background-color: #999999;
+  border: 1px solid #E3E3E3;
+  color: #FFFFFF;
+  margin: 5px auto;
+  overflow: hidden;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+}
+
+.card-wizard .picture:hover {
+  border-color: #2ca8ff;
+}
+
+
+.card-wizard .moving-tab {
+  position: absolute;
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  -webkit-font-smoothing: subpixel-antialiased;
+  top: -4px;
+  left: 0px;
+  border-radius: 30px;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+  color: #f96332;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.card-wizard .picture input[type="file"] {
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  left: 0;
+  opacity: 0 !important;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.card-wizard .picture-src {
+  width: 100%;
+}
+
+.card-wizard .tab-content {
+  min-height: 440px ;
+  /* padding-bottom: 50px; */
 }

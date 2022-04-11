@@ -1,0 +1,70 @@
+button:focus {
+    outline: none !important;
+    border: 0 !important;
+}
+
+::ng-deep .nav-fill .nav-link.active {
+    margin-top: -1px;
+    border-top: 2px solid #2e2e2e;
+}
+
+::ng-deep .nav-pills .nav-link.active,
+::ng-deep .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #2e2e2e;
+}
+
+.fab-container {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+
+    >div {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-bottom: 5px;
+
+        button {
+            margin-bottom: 17px;
+        }
+    }
+}
+
+.active{
+    background-color: #000 !important;
+    color: #fff;
+}
+
+.inactive {
+    background-color: #F6C042 !important; 
+    color: #fff;
+}
+
+.padre {
+    display: table;
+    // height:0px;
+}
+  
+.hijo {
+    display: table-cell;
+    vertical-align: middle;
+}
+  
+
+.boton {
+    border-radius: 15px 15px 0px 0px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
+    background-color: #F6C042;
+    position: relative;
+    bottom: -20px;
+    height: 30px;
+    width: 60%;
+    text-align: center;
+    padding-top: 7px;
+    margin-left: 18%;
+}
