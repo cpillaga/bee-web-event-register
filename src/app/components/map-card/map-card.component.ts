@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -21,7 +21,6 @@ export class MapCardComponent implements OnInit {
 
   @ViewChild('mapa', {static: false}) mapa;
   @Output() coorsEmit: EventEmitter<any> = new EventEmitter();
-  @Output() coordinate;
 
   map: Map;
   source: any;
@@ -29,14 +28,11 @@ export class MapCardComponent implements OnInit {
   marker: any;
   markerVectorLayer: any;
   tokenMap = 'pk.eyJ1IjoicGxlbWE3MDQiLCJhIjoiY2p4a2o3cmhzMjRleDN0cDZweWJpeWducyJ9.iLAt8_WcAk6ShXSp6FooEg';
-  
-  message:string;
 
   constructor() { }
 
   ngOnInit() {
     this.mapLoad();
-    this.getMarker(this.coordinate);
   }
 
   mapLoad() {
@@ -57,7 +53,6 @@ export class MapCardComponent implements OnInit {
           minZoom: 7
         })
       });
-
       this.clickMap();
     }, 50);
   }
@@ -67,18 +62,16 @@ export class MapCardComponent implements OnInit {
       if (this.markerVectorLayer !== undefined) {
         this.clearMarker();
       }
-
       const coors = transform(event.coordinate, 'EPSG:3857', 'EPSG:4326');
       this.coorsEmit.emit({
         lat: coors[1],
         lng: coors[0]
       });
-
       this.setMarker(event.coordinate);
     });
   }
 
-  public setMarker(coordinate) {
+  setMarker(coordinate) {
     this.source = new VectorSource();
     this.point = new Point(coordinate);
     this.marker = new Feature({
@@ -89,23 +82,6 @@ export class MapCardComponent implements OnInit {
     this.markerVectorLayer = new Vector({
       source: this.source,
     });
-    this.map.addLayer(this.markerVectorLayer);
-  }
-
-  public getMarker(coordinate){
-    console.log("llego en mapCard");
-    this.source = new VectorSource();
-    this.point = new Point(coordinate);
-    this.marker = new Feature({
-      geometry: this.point
-    });
-
-    this.marker.setStyle(this.iconStyle());
-    this.source.addFeature(this.marker);
-    this.markerVectorLayer = new Vector({
-      source: this.source,
-    });
-
     this.map.addLayer(this.markerVectorLayer);
   }
 
@@ -116,7 +92,7 @@ export class MapCardComponent implements OnInit {
         anchor: [20, 53],
         anchorXUnits: IconAnchorUnits.PIXELS,
         anchorYUnits: IconAnchorUnits.PIXELS,
-        src: `https://bee.com.ec/register/shop/assets/img/bee_location.png`
+        src: `register/shop/assets/img/bee_location.png`
       })
     });
   }

@@ -19,7 +19,7 @@
         <div class=" col-lg-12 card-wrapper">
             <div class="card md-12">
                 <div class="card-body bg-secondary">
-                    <div class="row" *ngIf="event.localities.length > 0">
+                    <div class="row" *ngIf="coincidencia">
                         <div class="col-md-7 row">
                             <div class="table-responsive" id="div1">
                                 <table class="table align-items-center table-flush" >
@@ -49,20 +49,34 @@
                             </div>
                         </div>
 
-                        <div class="col-md-5 row" *ngIf="event.localities.length > 0">
+                        <div class="col-md-5 row" *ngIf="coincidencia">
                             <div class="table-responsive">
                             
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="container-fluid"> 
-                                            <div class="row" style="justify-content: center;">
-                                                <label style="font-weight: bold; font-size: 36px;" for="total">TOTAL $: &nbsp;</label>
-                                                <input type="text" id="total" name="total" disabled="false" [ngModel]="total | number:'1.2-2'" style="font-weight: bold; background-color: #fff; color: #B32933; font-size: 36px; border: none; margin-top: -7px; width: 135px;">
+                                            <div class="row" style="margin-top: 10px;">
+                                                <div class="col-md-12">
+                                                    <label style="font-weight: bold; font-size: 20px; width: 150px; text-align: right;" for="subtotal">SUBTOTAL $:</label>
+                                                    <input type="text" id="subtotal" name="subtotal" disabled="false" [value]="subtotal | number:'1.2-2'" style="font-weight: bold; background-color: #fff; color: #B32933; font-size: 20px; border: none; margin-top: -7px; width: 135px; text-align: right;">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label style="font-weight: bold; font-size: 20px; width: 150px; text-align: right;" for="iva">IVA $:</label>
+                                                    <input type="text" id="iva" name="iva" disabled="false" [value]="iva | number:'1.2-2'" style="font-weight: bold; background-color: #fff; color: #B32933; font-size: 20px; border: none; margin-top: -7px; width: 135px; text-align: right;">
+                                                </div>
+                                            </div>
+                                            <div class="row" >
+                                                <div class="col-md-12">
+                                                    <label style="font-weight: bold; font-size: 20px; width: 150px; text-align: right;" for="total">TOTAL $:</label>
+                                                    <input type="text" id="total" name="total" disabled="false" [value]="total | number:'1.2-2'" style="font-weight: bold; background-color: #fff; color: #B32933; font-size: 20px; border: none; margin-top: -7px; width: 135px; text-align: right;">
+                                                </div>
                                             </div>
 
                                             <br>
                                             <div class="row" style="justify-content: center !important; margin-bottom: 10px;">
-                                                <button type="button" class="btn btn-fill btn-primary btn-md" (click)="facturar();" style="font-weight: bold;">IMPRIMIR</button>
+                                                <button type="button" [disabled]="total == '0.00'" class="btn btn-fill btn-primary btn-md" (click)="verifyStock();" style="font-weight: bold;">IMPRIMIR</button>
                                             </div>
                                         </div>
                                     </div>
@@ -71,9 +85,9 @@
                         </div>
                     </div>
 
-                    <div class="row" *ngIf="event.localities.length == 0">
+                    <div class="row" *ngIf="!coincidencia">
                         <div class="col-md-12">
-                            <p *ngIf="event.localities.length == 0" style="font-size: 16px; font-weight: bold; text-align: center;">No existen localidades</p>
+                            <p *ngIf="!coincidencia" style="font-size: 16px; font-weight: bold; text-align: center;">No existen localidades</p>
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ export class SalesComponent implements OnInit {
 
   getEvents(){
     this.events = null;
-    this._api.getEvent().subscribe(resp => {
+    this._api.getEventByAvailable('APROBADO').subscribe(resp => {
       this.events = resp.body['eventDB'];
 
       if(this.events.length > 0){

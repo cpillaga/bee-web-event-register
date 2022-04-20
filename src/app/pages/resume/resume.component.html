@@ -45,38 +45,41 @@
 
                     <div class="row">
                         <div class="col-md-4"  *ngFor="let item of events">
-                            <div class="card" style="border: transparent !important; border-radius: 5%;">
+                            <div class="card hov" (click)="viewDetail(item.event._id)" data-toggle="modal" data-target="#viewDetail" title="Seleccionar" style="border: transparent !important; border-radius: 5%;">
                                 <div class="card-body" id="card-resume">
                                     <div class="text-center">
                                         <div class="">
-                                            <img src="{{url}}view/event/{{item.event.img}}" style="max-width:100%; width: auto; height: 200px; border: transparent; border-radius: 6%;">
+                                            <img src="{{url}}view/event/{{item.event.img}}" style="max-width:100%; width: auto; height: 180px; border: transparent; border-radius: 6%;">
                                             
                                             <div class="text-block" style="margin-top: 10px;">
                                                 <p class="h5">
-                                                    <small class="h4 text-uppercase text-success font-weight-bold">
+                                                    <small style="color: black !important;" class="h4 text-uppercase text-success font-weight-bold">
                                                         {{item.event.nameEvent}}
-                                                        
                                                     </small>
                                                     <br>
                                                     {{item.event.description}}
                                                 </p>
                                                 <p class="h5">
-                                                    <small class="h4 text-uppercase text-success font-weight-bold">
+                                                    <small style="color: black !important;" class="h4 text-uppercase text-success font-weight-bold">
                                                         Total
                                                     </small>
                                                     <br> 
-                                                    {{item.total.$numberDecimal}}
+                                                    {{ item.total | number: '1.2-2' }}
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="card-footer" id="footer-resume" style="margin-top: -12%; background-color: transparent !important;">
-                                    <div class="boton" style="color: white; font-weight: bold; cursor: pointer;" data-toggle="modal" data-target="#viewDetail">
-                                        Ver más
-                                    </div>
-                                </div>
+                                <!-- <figcaption> -->
+                                    <!-- <div class="card-footer" id="footer-resume" style="margin-top: -12%; background-color: transparent !important;">
+                                        <div class="boton" style="color: white; font-weight: bold; cursor: pointer;" (click)="viewDetail(item.event._id)" data-toggle="modal" data-target="#viewDetail">
+                                            Ver más
+                                        </div>
+                                    </div> -->
+                                <!-- </figcaption> -->
+
+                                
                             </div>
                         </div>
                     </div>
@@ -90,7 +93,7 @@
 
 
 <div class="modal fade" id="viewDetail" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title" id="modal-title-default">Detalles de venta</h6>
@@ -104,22 +107,64 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p>Aqui va los reportes digital</p>
+                                    <p style="font-weight: bold; font-size: 20px; text-align: center;">Detalle ventas Aplicación</p>
+                                    <table class="table align-items-center table-flush">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="sort" data-sort="name">Localidad</th>
+                                                <th scope="col" class="sort" data-sort="name">Pvp</th>
+                                                <th scope="col" class="sort" data-sort="name">Cant</th>
+                                                <th scope="col" class="sort" data-sort="name">Total</th>
+                                                <th scope="col" class="sort" data-sort="name">Comisión</th>
+                                            </tr>
+                                        </thead>
+                
+                                        <tbody class="list">
+                                            <tr *ngFor="let app of listDetailApp; let i=index;">
+                                                <th >{{ app.description }}</th>
+                                                <th >{{ app.localityPrice }}</th>
+                                                <th >{{ app.count }}</th>
+                                                <th >{{ app.localityPrice * app.count }}</th>
+                                                <th >{{ app.localityCommision }}</th>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+
                                 <div class="col-md-6">
-                                    <p>Aqui va los reportes ventanilla</p>
+                                    <p style="font-weight: bold; font-size: 20px; text-align: center;">Detalle ventas Ventanilla</p>
+
+                                    <table class="table align-items-center table-flush sortable">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" >Localidad</th>
+                                                <th scope="col" >Pvp</th>
+                                                <th scope="col" >Cant</th>
+                                                <th scope="col" >Total</th>
+                                            </tr>
+                                        </thead>
+                
+                                        <tbody class="list">
+                                            <tr *ngFor="let web of listDetailWeb; let i=index;">
+                                                <th >{{ web.description }}</th>
+                                                <th >{{ web.localityPrice | number: '1.2-2' }}</th>
+                                                <th >{{ web.count }}</th>
+                                                <th >{{ (web.localityPrice * web.count) * 1.12 | number: '1.2-2' }}</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-md"  [disabled]="loading" (click)="saveStories()">
-                        <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
-                        Guardar
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-md" data-dismiss="modal" >
+                        Cerrar
                     </button>
-                </div> -->
+                </div>
             </form>            
         </div>
     </div>

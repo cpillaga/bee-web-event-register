@@ -13,20 +13,26 @@ export class EventsComponent implements OnInit {
   events;
   coincidencia = false;
   url = URL_SERVICES;
-  
+  status = 'PENDIENTE';
+
   constructor(
     private _api: ApiService,
     public router: Router,
   ) { }
 
   ngOnInit() {
-    this.getEvent();
+    this.getEvent(this.status);
   }
 
-  getEvent(){
-    this._api.getEvent().subscribe(resp => {
+  getEvent(available){
+    console.log("Entrooooooooooo");
+    console.log(available);
+    this.events = null;
+    this.status = available;
+    this._api.getEventByAvailable(available).subscribe(resp => {
+      console.log(resp);
       this.events = resp.body['eventDB'];
-      console.log(this.events);
+
       if(this.events.length > 0){
         this.coincidencia = true;
       }else{
@@ -35,9 +41,9 @@ export class EventsComponent implements OnInit {
     });
   }
 
-  filterEvent(word){
+  filterEvent(word, available){
     if (word == '') {
-      this.getEvent();
+      this.getEvent(available);
     }else{
       this._api.filterEvent(word).subscribe(resp => {
         this.events = resp.body['list'];

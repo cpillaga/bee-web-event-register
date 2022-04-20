@@ -16,3 +16,26 @@
 #footer-resume{
     border-top: 0px solid rgba(0, 0, 0, .05) !important;
 }
+
+.hov:hover{
+    background-color: #DFE0DF;
+    cursor: pointer;
+
+    .h5{
+        color: #000;
+    }
+}
+
+
+  /* Invisible texto */
+figcaption {
+    display:none; 
+    transition: all .5s;
+}
+
+  /* Visible texto */
+.card:hover > figcaption {
+    display:block;
+    transition: all .5s;
+    opacity: 50%;
+}

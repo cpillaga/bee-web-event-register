@@ -83,7 +83,8 @@ export class SidebarComponent implements OnInit {
     private socketService: SocketService,
     private _api: NotificationsService,
     public toastr: ToastrService,
-    public event: Event) { }
+    public event: Event
+  ) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);

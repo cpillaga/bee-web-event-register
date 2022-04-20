@@ -19,7 +19,7 @@
         <div class="col-lg-12 card-wrapper">
             <div class="card">
                 <div class="card-body bg-secondary">
-                    <h3 style="text-align: center;" *ngIf="imgStory.length == 0">No existen historias para mostrar</h3>
+                    <p class="msg-empty" *ngIf="imgStory.length == 0">No existen historias para mostrar</p>
                     <div class="p-4 animated fadeIn" *ngIf="imgStory.length > 0">
                         <div class="col-md-12 ">
                             <div class="row">

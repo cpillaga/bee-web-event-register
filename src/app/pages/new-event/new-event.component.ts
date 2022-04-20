@@ -352,8 +352,8 @@ export class NewEventComponent implements OnInit {
     this._api.postEvent(this.event).subscribe(resp => {
       if (resp.status === 200) {
         console.log(resp);
-        // this.postAdvertising(resp.body['envent']._id);
-        this.generateTicket(resp.body['event']._id);
+
+        this.generateLocalities(resp.body['event']._id);
       }
     });
   }
@@ -370,83 +370,141 @@ export class NewEventComponent implements OnInit {
     // this.imgAdvFormGroup 
   }
 
-  generateTicket(event){
+  generateLocalities(event){
     let cont = 0;
 
     for (let i = 0; i < this.listLocalities.length; i++) {
       if (this.listLocalities[i].newRecord == 'true') {
-        if (this.listLocalities[i].type == 'Secuencial') {
+        if (this.listLocalities[i].typeNumbering == 'Secuencial') {
           let body = {
+            description: this.listLocalities[i].description,
+            typeNumbering: this.listLocalities[i].typeNumbering,
+            amount: this.listLocalities[i].amount,
+            price: this.listLocalities[i].price,
+            stock: this.listLocalities[i].stock,
             event: event,
-            quantity: this.listLocalities[i].quantity,
           }
-  
-          this._api.generateTickets(body).subscribe(resp => {
+          
+          this._api.postLocalities(body).subscribe(resp => {
+            console.log(resp);
             if (resp.status === 200) {
-              this.tickets = resp.body['ticket'];
-              this.listLocalities[i].tickets = this.tickets;
-  
-              delete this.listLocalities[i].rows;
-              delete this.listLocalities[i].cols;
-              delete this.listLocalities[i].quantity;
-              delete this.listLocalities[i].hide;
-              delete this.listLocalities[i].newRecord;
-  
-              let localities = [this.listLocalities[i]];
-  
-              this._api.addLocalitiesToEvent(JSON.stringify(localities), event ).subscribe(resp => {
-                if (resp.status === 200) {
-                  cont = cont + 1;
-  
-                  if(cont ===  this.listLocalities.length){
-                    this.eventCreateAlert('success', 'Correcto', 'Se ha creado correctamente el evento', 'btn btn-primary');
-                  }
-                }
-              });
-            }else{
-              this.showAlert('error', 'Error', 'Algo ha salido mal', 'btn btn-default');
-              return;
+              cont = cont + 1;
+
+              if(cont ===  this.listLocalities.length){
+                this.eventCreateAlert('success', 'Correcto', 'Se ha creado correctamente el evento', 'btn btn-primary');
+              }
             }
           });
-        }else{
-          let body = {
-            event: event,
-            rows: this.listLocalities[i].rows,
-            cols: this.listLocalities[i].cols
-          }
+
+          // this._api.generateTickets(body).subscribe(resp => {
+          //   if (resp.status === 200) {
+          //     this.tickets = resp.body['ticket'];
+          //     this.listLocalities[i].tickets = this.tickets;
   
-          this._api.generateTickets(body).subscribe(resp => {
-            if (resp.status === 200) {
-              this.tickets = resp.body['ticket'];
-              this.listLocalities[i].tickets = this.tickets;
-               
-              delete this.listLocalities[i].rows;
-              delete this.listLocalities[i].cols;
-              delete this.listLocalities[i].quantity;
-              delete this.listLocalities[i].hide;
-              delete this.listLocalities[i].type;
-              delete this.listLocalities[i].newRecord;
+          //     delete this.listLocalities[i].rows;
+          //     delete this.listLocalities[i].cols;
+          //     delete this.listLocalities[i].quantity;
+          //     delete this.listLocalities[i].hide;
+          //     delete this.listLocalities[i].newRecord;
   
-              let localities = [this.listLocalities[i]]
-              
-              this._api.addLocalitiesToEvent(JSON.stringify(localities), event ).subscribe(resp => {
-                if (resp.status === 200) {
-                  cont = cont + 1;
+          //     let localities = [this.listLocalities[i]];
   
-                  if(cont ===  this.listLocalities.length){
-                    this.eventCreateAlert('success', 'Correcto', 'Se ha creado correctamente el evento', 'btn btn-primary');
-                  }
-                }
-              });
-            }else{
-              this.showAlert('error', 'Error', 'Algo ha salido mal', 'btn btn-default');
-              return;
-            }
-          });
+          //     this._api.addLocalitiesToEvent(JSON.stringify(localities), event ).subscribe(resp => {
+          //       if (resp.status === 200) {
+          //         cont = cont + 1;
+  
+          //         if(cont ===  this.listLocalities.length){
+          //           this.eventCreateAlert('success', 'Correcto', 'Se ha creado correctamente el evento', 'btn btn-primary');
+          //         }
+          //       }
+          //     });
+          //   }else{
+          //     this.showAlert('error', 'Error', 'Algo ha salido mal', 'btn btn-default');
+          //     return;
+          //   }
+          // });
         }
       }
     }
   }
+
+  // generateTicket(event){
+  //   let cont = 0;
+
+  //   for (let i = 0; i < this.listLocalities.length; i++) {
+  //     if (this.listLocalities[i].newRecord == 'true') {
+  //       if (this.listLocalities[i].typeNumbering == 'Secuencial') {
+  //         let body = {
+  //           event: event,
+  //           quantity: this.listLocalities[i].amount,
+  //         }
+  
+  //         this._api.generateTickets(body).subscribe(resp => {
+  //           if (resp.status === 200) {
+  //             this.tickets = resp.body['ticket'];
+  //             this.listLocalities[i].tickets = this.tickets;
+  
+  //             delete this.listLocalities[i].rows;
+  //             delete this.listLocalities[i].cols;
+  //             delete this.listLocalities[i].amount;
+  //             delete this.listLocalities[i].hide;
+  //             delete this.listLocalities[i].newRecord;
+  
+  //             let localities = [this.listLocalities[i]];
+  
+  //             this._api.addLocalitiesToEvent(JSON.stringify(localities), event ).subscribe(resp => {
+  //               if (resp.status === 200) {
+  //                 cont = cont + 1;
+  
+  //                 if(cont ===  this.listLocalities.length){
+  //                   this.eventCreateAlert('success', 'Correcto', 'Se ha creado correctamente el evento', 'btn btn-primary');
+  //                 }
+  //               }
+  //             });
+  //           }else{
+  //             this.showAlert('error', 'Error', 'Algo ha salido mal', 'btn btn-default');
+  //             return;
+  //           }
+  //         });
+  //       }else{
+  //         let body = {
+  //           event: event,
+  //           rows: this.listLocalities[i].rows,
+  //           cols: this.listLocalities[i].cols
+  //         }
+  
+  //         this._api.generateTickets(body).subscribe(resp => {
+  //           if (resp.status === 200) {
+  //             this.tickets = resp.body['ticket'];
+  //             this.listLocalities[i].tickets = this.tickets;
+               
+  //             delete this.listLocalities[i].rows;
+  //             delete this.listLocalities[i].cols;
+  //             delete this.listLocalities[i].amount;
+  //             delete this.listLocalities[i].hide;
+  //             delete this.listLocalities[i].typeNumbering;
+  //             delete this.listLocalities[i].newRecord;
+  
+  //             let localities = [this.listLocalities[i]]
+              
+  //             this._api.addLocalitiesToEvent(JSON.stringify(localities), event ).subscribe(resp => {
+  //               if (resp.status === 200) {
+  //                 cont = cont + 1;
+  
+  //                 if(cont ===  this.listLocalities.length){
+  //                   this.eventCreateAlert('success', 'Correcto', 'Se ha creado correctamente el evento', 'btn btn-primary');
+  //                 }
+  //               }
+  //             });
+  //           }else{
+  //             this.showAlert('error', 'Error', 'Algo ha salido mal', 'btn btn-default');
+  //             return;
+  //           }
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
 
   showAlert(type, title, text, classBtn) {
     swal.fire({
@@ -625,9 +683,9 @@ export class NewEventComponent implements OnInit {
       const stock = Number(quantity);
       const amount = Number(quantity);
       if (opt === "new") {
-        this.localities = new Localidades(description, price, amount, stock, type, 'true', quantity, null, null);
+        this.localities = new Localidades(description, price, amount, stock, type, 'true', null, null);
       }else{
-        this.localities = new Localidades(description, price, amount, stock, type, 'false', quantity, null, null);
+        this.localities = new Localidades(description, price, amount, stock, type, 'false', null, null);
       }
     }else{
       const rows = this.newLocalities.get('rows').value || 0;
@@ -636,9 +694,9 @@ export class NewEventComponent implements OnInit {
       const amount = Number(rows) * Number(cols);
 
       if (opt === "new") {
-        this.localities = new Localidades(description, price, amount, stock, type, 'true', null, rows, cols);
+        this.localities = new Localidades(description, price, amount, stock, type, 'true', rows, cols);
       }else{
-        this.localities = new Localidades(description, price, amount, stock, type, 'false', null, rows, cols);
+        this.localities = new Localidades(description, price, amount, stock, type, 'false', rows, cols);
       }
     }
 

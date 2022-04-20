@@ -78,6 +78,38 @@ export class ApiService {
     return this._http.post(url, body, {headers, observe: 'response'});
   }
 
+  getEventByAvailable(available){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    const url = URL_SERVICES + `event-available/${this.idOrganizer}/${available}`;
+
+    return this._http.get(url, {headers, observe: 'response'});
+  }
+
+  postLocalities(body){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+    
+    const url = URL_SERVICES + `localities`;
+
+    return this._http.post(url, body, {headers, observe: 'response'});
+  }
+
+  getLocalities(idEvent){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + 'localities/' + idEvent;
+    
+    return this._http.get(url, {headers, observe: 'response'});
+  }
+
   postAdvertising(body){
     const headers = new HttpHeaders({
       enctype: 'multipart/form-data',
@@ -89,15 +121,38 @@ export class ApiService {
     return this._http.post(url, body, {headers, observe: 'response'});
   }
 
-  generateTickets(body){
+  postOrder(body){
+    const headers = new HttpHeaders({
+      enctype: 'multipart/form-data',
+      Authorization: this.getToken()
+    });
+    
+    const url = URL_SERVICES + `organizer/order-event`;
+
+    return this._http.post(url, body, {headers, observe: 'response'});
+  }
+
+  generateTicketsSecuencial(body){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: this.getToken()
     });
 
-    const url = URL_SERVICES + `ticket/register`;
+    const url = URL_SERVICES + `ticket/secuencial`;
 
     return this._http.post(url, body, {headers, observe: 'response'});
+  }
+
+  putStockLocality(body){
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+    
+    const url = URL_SERVICES + `localities-organizer/stock/${body.idLocality}/${body.quantity}`;
+
+    return this._http.put(url, {}, {headers, observe: 'response'});
   }
 
   addLocalitiesToEvent(localidades, event){
@@ -179,10 +234,18 @@ export class ApiService {
     return this._http.get(url, { headers, observe: 'response' });
   }
 
+  getDetailTickets(idEvent){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + `event/orders/sold/localities/total/${idEvent}`;
+
+    return this._http.get(url, { headers, observe: 'response' });
+  }
 
   getReportEvent(id, desde, hasta){
-    // {{url}}/event/orders/sold/localities/total/620fc49fbb6add26b88e3099/2021-06-01T05:00:00.000Z/2022-04-02T05:00:00.000Z
-    
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: this.getToken()
@@ -192,4 +255,6 @@ export class ApiService {
 
     return this._http.get(url, { headers, observe: 'response' });
   }
+
+
 }

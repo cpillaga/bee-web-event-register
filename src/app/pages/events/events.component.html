@@ -19,42 +19,42 @@
         <div class=" col-lg-12 card-wrapper">
             <div class="card md-12">
                 <div class="card-body bg-secondary">
-                    <!-- <tabset type="pills" class="nav-fill flex-column flex-md-row">
-                        <tab>
-                            <ng-template tabHeading>
-                                <i *ngIf="loadPlacedOrders" class="fa fa-spinner fa-spin"></i>
+                    <tabset type="pills" class="nav-fill flex-column flex-md-row">
+                        <tab (selectTab)="getEvent('PENDIENTE')">
+                            <ng-template tabHeading >
                                 PENDIENTES
                             </ng-template>
                         </tab>
-                        <tab>
-                            <ng-template tabHeading>
-                                <i *ngIf="loadPlacedOrders" class="fa fa-spinner fa-spin"></i>
-                                ACEPTADOS
+                        <tab (selectTab)="getEvent('APROBADO')">
+                            <ng-template tabHeading >
+                                APROBADOS
                             </ng-template>
                         </tab>
-                        <tab>
-                            <ng-template tabHeading>
-                                <i *ngIf="loadPlacedOrders" class="fa fa-spinner fa-spin"></i>
+                        <tab (selectTab)="getEvent('SUSPENDIDO')">
+                            <ng-template tabHeading >
                                 SUSPENDIDOS
                             </ng-template>
                         </tab>
-                        <tab>
-                            <ng-template tabHeading>
-                                <i *ngIf="loadPlacedOrders" class="fa fa-spinner fa-spin"></i>
+                        <tab (selectTab)="getEvent('CANCELADO')">
+                            <ng-template tabHeading >
                                 CANCELADOS
                             </ng-template>
                         </tab>
-                        <tab>
-                            <ng-template tabHeading>
-                                <i *ngIf="loadPlacedOrders" class="fa fa-spinner fa-spin"></i>
+                        <tab (selectTab)="getEvent('NEGADO')">
+                            <ng-template tabHeading >
                                 NEGADOS
                             </ng-template>
                         </tab>
-                    </tabset> -->
+                        <tab (selectTab)="getEvent('FINALIZADO')">
+                            <ng-template tabHeading >
+                                FINALIZADOS
+                            </ng-template>
+                        </tab>
+                    </tabset>
 
-                    <div class="p-4">
-                        <input type="text" class="form-control form-control-alternative"
-                            (input)="filterEvent($event.target.value)" placeholder="Buscar..." />
+                    <div class="p-4" >
+                        <input type="text" *ngIf="coincidencia == true" class="form-control form-control-alternative"
+                            (input)="filterEvent($event.target.value, status)" placeholder="Buscar..." />
                     </div>
 
                     <div class="row" *ngIf="coincidencia == true">
@@ -68,8 +68,9 @@
                                             </h5>
                                         </div>
                                         <div class=" col-md-4 text-right">
-                                            <p *ngIf="evt.available" class=" icon icon-shape bg-gradient-green text-white rounded-circle shadow"></p>
-                                            <p *ngIf="!evt.available" class=" icon icon-shape bg-gradient-red text-white rounded-circle shadow"></p>
+                                            <p *ngIf="evt.available === 'APROBADO'" class=" icon icon-shape bg-gradient-green text-white rounded-circle shadow"></p>
+                                            <p *ngIf="evt.available === 'SUSPENDIDO' || evt.available === 'PENDIENTE'" class=" icon icon-shape bg-gradient-orange text-white rounded-circle shadow"></p>
+                                            <p *ngIf="evt.available === 'CANCELADO' || evt.available === 'NEGADO' " class=" icon icon-shape bg-gradient-red text-white rounded-circle shadow"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +96,7 @@
                     </div>
 
                     <div class="row" *ngIf="coincidencia == false">
-                        <p>No hay eventos para mostrar</p>
+                        <p class="msg-empty">No hay eventos para mostrar</p>
                     </div>
                 </div>
             </div>

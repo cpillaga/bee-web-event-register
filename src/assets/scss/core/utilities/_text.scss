@@ -88,6 +88,13 @@
   letter-spacing: 0.125rem;
 }
 
+.msg-empty{
+  text-align: center !important; 
+  font-size: 18px; 
+  font-weight: bold;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
 // Color variations
 
 @each $color, $value in $colors {

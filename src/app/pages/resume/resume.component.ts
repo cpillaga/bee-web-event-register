@@ -17,6 +17,9 @@ export class ResumeComponent implements OnInit {
 
   url = URL_SERVICES;
   events: any[] = [];
+  
+  listDetailApp: any[] = [];
+  listDetailWeb: any[] = [];
 
   constructor(
     private _api: ApiService,
@@ -45,16 +48,16 @@ export class ResumeComponent implements OnInit {
     if (buscar.value.desde > buscar.value.hasta) {
       this.showAlert('error', 'Error', 'Fecha desde debe ser menor a fecha hasta', 'btn btn-primary');
     }else{
-      
       if (buscar.value.buscar == '') {
         this._api.getTotalEvent(buscar.value.desde, buscar.value.hasta).subscribe(resp => {
           this.events = resp.body['list'];
+          console.log(this.events);
         });
       }else{
         this._api.getTotalEvent(buscar.value.desde, buscar.value.hasta).subscribe(resp => {
           let eventAux = resp.body['list'];
           this.events = [];
-
+          
           eventAux.forEach(element => {
             if (element.event['nameEvent'].toLowerCase().includes((buscar.value.buscar.toLowerCase()))) {
                this.events.push(element);
@@ -63,6 +66,26 @@ export class ResumeComponent implements OnInit {
         });
       }
     }
+  }
+
+  viewDetail(idEvent){
+    this._api.getDetailTickets(idEvent).subscribe(resp => {
+      console.log(resp);
+      
+      let contApp = 0;
+      let contWeb = 0; 
+
+      for (let i = 0; i < resp.body['list'].length; i++) {
+        console.log(resp.body['list'][i]['digital']);
+        if (resp.body['list'][i]['digital'] === false) {
+          this.listDetailWeb[contWeb] = resp.body['list'][i];
+          contWeb = contWeb + 1;
+        }else{
+          this.listDetailApp[contApp] = resp.body['list'][i];
+          contApp  = contApp + 1;
+        } 
+      }
+    });
   }
 
   showAlert(type, title, text, classBtn) {
