@@ -82,6 +82,9 @@ export class NewEventComponent implements OnInit {
   loadPut = false;
   loading = false;
 
+  latE: any = null;
+  lngE: any = null;
+
   @Output() enviarLocalidad = new EventEmitter<Localidades>();
 
 
@@ -175,6 +178,9 @@ export class NewEventComponent implements OnInit {
   createFromEdit(idEvt){
     this._api.getEventById(idEvt).subscribe(resp => {
       this.eventData = resp.body['eventDB'];
+
+      this.latE = this.eventData.lat;
+      this.lngE = this.eventData.lng;
 
       this.categoryFormGroup = this._formBuilder.group({
         categoria: ['', [Validators.required, Validators.minLength(1)]]

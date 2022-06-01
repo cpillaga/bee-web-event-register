@@ -301,7 +301,7 @@
                   </i>
                 </label>
                 
-                <app-map-card (coorsEmit)="setLatLng($event)"></app-map-card>
+                <app-map-card [lat]="latE" [lng]="lngE" (coorsEmit)="setLatLng($event)"></app-map-card>
               </div>
 
               <div class="col-md-12">

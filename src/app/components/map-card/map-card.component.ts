@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -20,6 +20,8 @@ import { fromLonLat, transform } from 'ol/proj';
 export class MapCardComponent implements OnInit {
 
   @ViewChild('mapa', {static: false}) mapa;
+  @Input() lat: any;
+  @Input() lng: any;
   @Output() coorsEmit: EventEmitter<any> = new EventEmitter();
 
   map: Map;
@@ -29,7 +31,7 @@ export class MapCardComponent implements OnInit {
   markerVectorLayer: any;
   tokenMap = 'pk.eyJ1IjoicGxlbWE3MDQiLCJhIjoiY2p4a2o3cmhzMjRleDN0cDZweWJpeWducyJ9.iLAt8_WcAk6ShXSp6FooEg';
 
-  constructor() { }
+  constructor() {  }
 
   ngOnInit() {
     this.mapLoad();
@@ -47,13 +49,14 @@ export class MapCardComponent implements OnInit {
           })
         ],
         view: new View({
-          center: fromLonLat([-79.0023859, -2.8960714]),
+          center: fromLonLat([this.lng, this.lat]),
           zoom: 14,
           maxZoom: 18,
           minZoom: 7
         })
       });
       this.clickMap();
+      this.setMarker(transform([this.lng, this.lat], 'EPSG:4326', 'EPSG:3857'));
     }, 50);
   }
 
@@ -62,16 +65,17 @@ export class MapCardComponent implements OnInit {
       if (this.markerVectorLayer !== undefined) {
         this.clearMarker();
       }
-      const coors = transform(event.coordinate, 'EPSG:3857', 'EPSG:4326');
-      this.coorsEmit.emit({
-        lat: coors[1],
-        lng: coors[0]
-      });
       this.setMarker(event.coordinate);
     });
   }
 
   setMarker(coordinate) {
+    const coors = transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+    this.coorsEmit.emit({
+      lat: coors[1],
+      lng: coors[0]
+    });
+    console.log(coordinate);
     this.source = new VectorSource();
     this.point = new Point(coordinate);
     this.marker = new Feature({
@@ -92,7 +96,7 @@ export class MapCardComponent implements OnInit {
         anchor: [20, 53],
         anchorXUnits: IconAnchorUnits.PIXELS,
         anchorYUnits: IconAnchorUnits.PIXELS,
-        src: `register/shop/assets/img/bee_location.png`
+        src: `./assets/bee_location.png`
       })
     });
   }
