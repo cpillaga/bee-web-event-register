@@ -102,6 +102,10 @@ export class NewEventComponent implements OnInit {
       }else{
         this.createFrom();
         this.title = "Agregar Evento";
+        
+        for (let i = 0; i < this.categories.length; i++) {
+          this.active[i] = 'inactive';
+        }
       }
       
     }, 250);
@@ -114,6 +118,9 @@ export class NewEventComponent implements OnInit {
   }
 
   createFrom(){
+
+
+
     this.categoryFormGroup = this._formBuilder.group({
       categoria: ['', [Validators.required, Validators.minLength(1)]]
     });
@@ -136,6 +143,7 @@ export class NewEventComponent implements OnInit {
       discountChildren: [''],
       percentageChildren: [''],
       percentageDisability: [''],
+      iva: [''],
     });
 
     this.extraFormGroup = this._formBuilder.group({
@@ -144,6 +152,7 @@ export class NewEventComponent implements OnInit {
       existRequirements: ['', [Validators.required]],
       requirementsDescription: [''],
       parkingNumber: [''],
+      iva: ['']
     });
 
     this.mapFormGroup = this._formBuilder.group({
@@ -219,6 +228,7 @@ export class NewEventComponent implements OnInit {
         existRequirements: [this.eventData.existRequirements.toString(), [Validators.required]],
         requirementsDescription: [this.eventData.requirementsDescription],
         parkingNumber: [this.eventData.parkingNumber],
+        iva: [this.eventData.iva]
       });
 
       this.mapFormGroup = this._formBuilder.group({
@@ -245,11 +255,9 @@ export class NewEventComponent implements OnInit {
               quantity:  [this.eventData.localities[i].amount, [Validators.required]],
             }); 
           }
-
           this.saveLocalities("add");
         }
       }
-
     });
   }
 
@@ -273,7 +281,6 @@ export class NewEventComponent implements OnInit {
       this.showAlert('error', 'Error', 'Debe ingresar solo números ó utilizar punto(.) para decimales', 'btn btn-secondary')
       return false;
     }
-  
   }
 
   selectCategory(cat, index){
@@ -310,18 +317,31 @@ export class NewEventComponent implements OnInit {
     const startDate = fecha+"T"+startTimeA+":00.000Z";
     const endDate = fecha+"T"+endTimeA+":00.000Z";
 
-    if (this.priceFormGroup.value.isFree == 'false'){
-      this.priceFormGroup.value.discountChildren = 'false';
-      this.priceFormGroup.value.discountDisability = 'false';
-      this.priceFormGroup.value.ageChildren = '0';
-    }
+    console.log(this.priceFormGroup.value.isFree);
 
-    if (this.priceFormGroup.value.discountChildren == 'false') {
+    if (this.priceFormGroup.value.isFree == true || this.priceFormGroup.value.isFree == "true"){
+      this.priceFormGroup.value.discountChildren = false;
       this.priceFormGroup.value.percentageChildren = 0;
-    }
-
-    if (this.priceFormGroup.value.discountDisability == 'false') {
+      this.priceFormGroup.value.discountDisability = false;
       this.priceFormGroup.value.percentageDisability = 0;
+      this.priceFormGroup.value.ageChildren = '0';
+      this.priceFormGroup.value.iva =  false;
+      this.priceFormGroup.value.valueIva = 0;
+      this.priceFormGroup.value.isFree = true;
+    }else{
+      if(this.priceFormGroup.value.iva === 'true' || this.priceFormGroup.value.iva === true){
+        this.priceFormGroup.value.valueIva = 12;
+      }else{
+        this.priceFormGroup.value.valueIva = 0;
+      }
+
+      if (this.priceFormGroup.value.discountChildren == 'false' || this.priceFormGroup.value.discountChildren == false) {
+        this.priceFormGroup.value.percentageChildren = 0;
+      }
+  
+      if (this.priceFormGroup.value.discountDisability == 'false' || this.priceFormGroup.value.discountDisability == false) {
+        this.priceFormGroup.value.percentageDisability = 0;
+      }
     }
 
     this.event.append('category', this.categoryFormGroup.value.categoria);
@@ -337,6 +357,8 @@ export class NewEventComponent implements OnInit {
     this.event.append('lng', this.mapFormGroup.value.lng);
     this.event.append('isFree', this.priceFormGroup.value.isFree);
     this.event.append('ageChildren', this.priceFormGroup.value.ageChildren);
+    this.event.append('iva', this.priceFormGroup.value.iva);
+    this.event.append('valueIva', this.priceFormGroup.value.valueIva);
     this.event.append('discountDisability', this.priceFormGroup.value.discountDisability);
     this.event.append('discountChildren', this.priceFormGroup.value.discountChildren);
     this.event.append('percentageChildren', this.priceFormGroup.value.percentageChildren);
@@ -351,11 +373,14 @@ export class NewEventComponent implements OnInit {
 
     this._api.postEvent(this.event).subscribe(resp => {
       if (resp.status === 200) {
-        console.log(resp);
-
-        this.generateLocalities(resp.body['event']._id);
+        if (this.priceFormGroup.value.isFree === true || this.priceFormGroup.value.isFree === 'true') {
+          this.eventCreateAlert('success', 'Correcto', 'Se ha creado correctamente el evento', 'btn btn-primary');
+        }else{
+          this.generateLocalities(resp.body['event']._id);
+        }
       }
     });
+    
   }
 
   postAdvertising(idEvent){
@@ -612,6 +637,10 @@ export class NewEventComponent implements OnInit {
   //Atributos priceFormGroup
   get isFree() {
     return this.priceFormGroup.get('isFree');
+  }
+
+  get iva() {
+    return this.priceFormGroup.get('iva');
   }
 
   get ageChildren() {

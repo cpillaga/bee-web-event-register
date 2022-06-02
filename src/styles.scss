@@ -1,86 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 /* Importing Bootstrap SCSS file. */
+
 @import '~bootstrap/scss/bootstrap';
 @import '~@angular/material/theming';
 @include mat-core();
-
-$bv-brand: (
-    50: #ffffff,
-    100: #dde6f3,
-    200: #b4c9e4,
-    300: #7fa3d1,
-    400: #6992c9,
-    500: #5282c1,
-    600: #4072b4,
-    700: #38649d,
-    800: #305687,
-    900: #1a1a1a,
-    A100: #ffffff,
-    A200: #dde6f3,
-    A400: #6992c9,
-    A700: #38649d,
-    contrast: (
-        50: $black-87-opacity,
-        100: $black-87-opacity,
-        200: $black-87-opacity,
-        300: $black-87-opacity,
-        400: $black-87-opacity,
-        500: white,
-        600: white,
-        700: white,
-        800: white,
-        900: white,
-        A100: $black-87-opacity,
-        A200: $black-87-opacity,
-        A400: $black-87-opacity,
-        A700: white,
-    )
-);
-
-$bv-orange: (
-    50: #ffffff,
-    100: #fff7f4,
-    200: #fecdbd,
-    300: #fc9977,
-    400: #fc8259,
-    500: #fb6c3b,
-    600: #fa551d,
-    700: #F6C042,
-    800: #d63a04,
-    900: #b83204,
-    A100: #ffffff,
-    A200: #fff7f4,
-    A400: #fc8259,
-    A700: #f44205,
-    contrast: (
-        50: $black-87-opacity,
-        100: $black-87-opacity,
-        200: $black-87-opacity,
-        300: $black-87-opacity,
-        400: $black-87-opacity,
-        500: white,
-        600: white,
-        700: white,
-        800: white,
-        900: white,
-        A100: $black-87-opacity,
-        A200: $black-87-opacity,
-        A400: $black-87-opacity,
-        A700: white,
-    )
-);
-
+$bv-brand: ( 50: #ffffff, 100: #dde6f3, 200: #b4c9e4, 300: #7fa3d1, 400: #6992c9, 500: #5282c1, 600: #4072b4, 700: #38649d, 800: #305687, 900: #1a1a1a, A100: #ffffff, A200: #dde6f3, A400: #6992c9, A700: #38649d, contrast: ( 50: $black-87-opacity, 100: $black-87-opacity, 200: $black-87-opacity, 300: $black-87-opacity, 400: $black-87-opacity, 500: white, 600: white, 700: white, 800: white, 900: white, A100: $black-87-opacity, A200: $black-87-opacity, A400: $black-87-opacity, A700: white, ));
+$bv-orange: ( 50: #ffffff, 100: #fff7f4, 200: #fecdbd, 300: #fc9977, 400: #fc8259, 500: #fb6c3b, 600: #fa551d, 700: #F6C042, 800: #d63a04, 900: #b83204, A100: #ffffff, A200: #fff7f4, A400: #fc8259, A700: #f44205, contrast: ( 50: $black-87-opacity, 100: $black-87-opacity, 200: $black-87-opacity, 300: $black-87-opacity, 400: $black-87-opacity, 500: white, 600: white, 700: white, 800: white, 900: white, A100: $black-87-opacity, A200: $black-87-opacity, A400: $black-87-opacity, A700: white, ));
 $bv-palette-primary: mat-palette($bv-brand, 900);
 $bv-palette-accent: mat-palette($bv-orange, 700);
 $bv-palette-warn: mat-palette($mat-red, A200);
-
 $bv-theme: mat-light-theme($bv-palette-primary, $bv-palette-accent, $bv-palette-warn);
 @include angular-material-theme($bv-theme);
+html,
+body {
+    height: 100%;
+}
 
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .btn-primary:focus {
     color: #ffffff;
@@ -93,7 +34,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     height: 150px;
     border-radius: 5%;
     // margin: 20px;
-
     object-fit: cover;
     object-position: center;
 }

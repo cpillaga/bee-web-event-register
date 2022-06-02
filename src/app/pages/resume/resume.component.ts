@@ -21,6 +21,11 @@ export class ResumeComponent implements OnInit {
   listDetailApp: any[] = [];
   listDetailWeb: any[] = [];
 
+  ivaValue = 0.12;
+  ivaSum = 1.12;
+  iva = false;
+
+
   constructor(
     private _api: ApiService,
   ) { }
@@ -68,7 +73,19 @@ export class ResumeComponent implements OnInit {
     }
   }
 
-  viewDetail(idEvent){
+  viewDetail(evento){
+    if (evento.iva === true) {
+      this.iva = true;
+      this.ivaValue = 0.12;
+      this.ivaSum = 1.12;
+    }else{
+      this.iva = false;
+      this.ivaValue = 1;
+      this.ivaSum = 1;
+    }
+    
+    let idEvent = evento['_id'];
+
     this._api.getDetailTickets(idEvent).subscribe(resp => {
       console.log(resp);
       

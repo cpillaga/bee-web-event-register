@@ -63,7 +63,7 @@ export class NavbarComponent implements OnInit {
   getSession() {
     this.api.getSession().subscribe((data: any) => {
       console.log(data.body.shop.businessName);
-      this.name = data.body.shop.businessName;
+      this.name = data.body.shop.businessName || 'Organizador';
 
       console.log(this.name);
     });
@@ -72,7 +72,7 @@ export class NavbarComponent implements OnInit {
   logOut() {
     this.api.logOut().subscribe((data: any) => {
       localStorage.setItem('token-organizer', null);
-      this.socketService.socketClose();
+      // this.socketService.socketClose();
       this.router.navigate(['/login']);
     }, (_) => {
       this.showAlert('error', 'Error', 'Algo ha salido mal intente nuevamente después!', 'btn btn-primary');

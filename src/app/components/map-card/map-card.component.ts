@@ -92,7 +92,7 @@ export class MapCardComponent implements OnInit {
         anchor: [20, 53],
         anchorXUnits: IconAnchorUnits.PIXELS,
         anchorYUnits: IconAnchorUnits.PIXELS,
-        src: `register/shop/assets/img/bee_location.png`
+        src: `https://bee.com.ec/register/shop/assets/img/bee_location.png`
       })
     });
   }

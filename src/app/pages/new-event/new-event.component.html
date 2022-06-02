@@ -1,368 +1,387 @@
 <div class="header bg-cyan pb-6">
-  <div class="container-fluid">
-    <div class="header-body">
-      <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
-          <a href="javascript:void(0)">
-              <i class="fa fa-tags"> </i>
-          </a>
-          <span> - </span>
-          <h6 class="h2 text-white d-inline-block mb-0">{{ title }}</h6>
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-tags"> </i>
+                    </a>
+                    <span> - </span>
+                    <h6 class="h2 text-white d-inline-block mb-0">{{ title }}</h6>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div class="container-fluid mt--6">
-  <div class="row justify-content-center">
-    <div class="col-lg-12 card-wrapper">
-      <div class="card">
-        <mat-horizontal-stepper  #stepper [linear]="!idEvt">
-          <mat-step label="Categoría ({{ category }})" state="category" [stepControl]="categoryFormGroup">
-            <form  id="div1" style="height: 470px; padding-top: 10px;" [formGroup] = "categoryFormGroup">
-              <div class="row col-md-12 p-2" >
-                <div class="col-md-3" *ngFor="let cat of categories; let i = index" >
-                  <div class="card {{ active[i] }}" matTooltip="{{ cat.name }}" style="height: 120px; cursor: pointer; box-shadow: 0px 1px 3px 1px #ced4da;"  (click)="selectCategory(cat, i)">
-                    <div class="card-body padre">
-                      <h3 class="card-title mb-3 {{ active[i] }} hijo" >
-                        {{ cat.name }}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <div class="btn-bootom">
-              <button mat-button matStepperNext  [disabled]="category==''" style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
-            </div>
-          </mat-step>
+    <div class="row justify-content-center">
+        <div class="col-lg-12 card-wrapper">
+            <div class="card">
+                <mat-horizontal-stepper #stepper [linear]="!idEvt">
+                    <mat-step label="Categoría ({{ category }})" state="category" [stepControl]="categoryFormGroup">
+                        <form id="div1" style="height: 470px; padding-top: 10px;" [formGroup]="categoryFormGroup">
+                            <div class="row col-md-12 p-2">
+                                <div class="col-md-3" *ngFor="let cat of categories; let i = index">
+                                    <div class="card {{ active[i] }}" matTooltip="{{ cat.name }}" style="height: 120px; cursor: pointer; box-shadow: 0px 1px 3px 1px #ced4da;" (click)="selectCategory(cat, i)">
+                                        <div class="card-body padre">
+                                            <h3 class="card-title mb-3 {{ active[i] }} hijo">
+                                                {{ cat.name }}
+                                            </h3>
+                                            <input type="hidden" id="name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="btn-bootom">
+                            <button mat-button matStepperNext [disabled]="category==''" style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
+                        </div>
+                    </mat-step>
 
-          <mat-step label="Datos Evento" state="event" [stepControl]="eventFormGroup">
-            <form [formGroup]="eventFormGroup" id="div1" style="height: 460px; padding-top: 10px;">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <input class="form-control" placeholder="Nombre" type="hidden" />
-                      
-                      <small *ngIf="nameEvent.errors && nameEvent.touched" class="text-danger">
+                    <mat-step label="Datos Evento" state="event" [stepControl]="eventFormGroup">
+                        <form [formGroup]="eventFormGroup" id="div1" style="height: 460px; padding-top: 10px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input class="form-control" placeholder="Nombre" type="hidden" />
+
+                                            <small *ngIf="nameEvent.errors && nameEvent.touched" class="text-danger">
                       </small>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-control-label">Nombre</label>
-                      <input class="form-control" placeholder="Nombre" type="text" formControlName="nameEvent" required="true" />
-                      
-                      <small *ngIf="nameEvent.errors && nameEvent.touched" class="text-danger">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Nombre</label>
+                                            <input class="form-control" placeholder="Nombre" type="text" formControlName="nameEvent" required="true" />
+
+                                            <small *ngIf="nameEvent.errors && nameEvent.touched" class="text-danger">
                           * Nombre requerido
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6">
-                      <label class="form-control-label">Fecha</label>
-                      <input class="form-control" placeholder="Fecha" type="date" formControlName="date" required="true" />
-                      <small *ngIf="date.errors && date.touched" class="text-danger">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Fecha</label>
+                                            <input class="form-control" placeholder="Fecha" type="date" formControlName="date" required="true" />
+                                            <small *ngIf="date.errors && date.touched" class="text-danger">
                           * Nombre requerido
                       </small>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="col-md-12" style="margin-top: 15px;">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label class="form-control-label">Descripción</label>
-                      <input class="form-control" placeholder="Descripcion" type="text" formControlName="description" required="true" />
-                      <small *ngIf="description.errors && description.touched" class="text-danger">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" style="margin-top: 15px;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Descripción</label>
+                                            <input class="form-control" placeholder="Descripcion" type="text" formControlName="description" required="true" />
+                                            <small *ngIf="description.errors && description.touched" class="text-danger">
                           * Descripción requerido
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6">
-                      <label class="form-control-label">Hora Inicio</label>
-                      <input class="form-control" placeholder="Hora Inicio" type="time" formControlName="startTime" required="true" />
-                      <small *ngIf="startTime.errors && startTime.touched" class="text-danger">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Hora Inicio</label>
+                                            <input class="form-control" placeholder="Hora Inicio" type="time" formControlName="startTime" required="true" />
+                                            <small *ngIf="startTime.errors && startTime.touched" class="text-danger">
                           * Hora inicio requerido
                       </small>
-                    </div>
-                  </div>
-                </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div class="col-md-12" style="margin-top: 15px;">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label class="form-control-label">Ciudad</label>
-                      <input class="form-control" placeholder="Ciudad" type="text" formControlName="city" required="true" />
-                      <small *ngIf="city.errors && city.touched" class="text-danger">
+                                <div class="col-md-12" style="margin-top: 15px;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Ciudad</label>
+                                            <input class="form-control" placeholder="Ciudad" type="text" formControlName="city" required="true" />
+                                            <small *ngIf="city.errors && city.touched" class="text-danger">
                           * Ciudad requerido
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6">
-                      <label class="form-control-label">Hora Fin</label>
-                      <input class="form-control" placeholder="Hora Fin" type="time" formControlName="endTime" required="true" />
-                      <small *ngIf="endTime.errors && endTime.touched" class="text-danger">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Hora Fin</label>
+                                            <input class="form-control" placeholder="Hora Fin" type="time" formControlName="endTime" required="true" />
+                                            <small *ngIf="endTime.errors && endTime.touched" class="text-danger">
                           * Hora fin requerido
                       </small>
-                    </div>
-                  </div>
-                </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div class="col-md-12" style="margin-top: 15px;">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label class="form-control-label">Lugar</label>
-                      <input class="form-control" placeholder="Lugar" type="text" formControlName="place" required="true" />
-                      <small *ngIf="place.errors && place.touched" class="text-danger">
+                                <div class="col-md-12" style="margin-top: 15px;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Lugar</label>
+                                            <input class="form-control" placeholder="Lugar" type="text" formControlName="place" required="true" />
+                                            <small *ngIf="place.errors && place.touched" class="text-danger">
                           * Lugar requerido
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6">
-                      <label class="form-control-label">Es para todo público?</label>
-                      <select name="isAllPublic" id="isAllPublic" class="form-control selectpicker" formControlName="isAllPublic">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Es para todo público?</label>
+                                            <select name="isAllPublic" id="isAllPublic" class="form-control selectpicker" formControlName="isAllPublic">
                         <option value="" hidden>Seleccionar</option>
                         <option value="true">Si</option>
                         <option value="false">No</option>
                       </select>
-                      <small *ngIf="isAllPublic.errors && isAllPublic.touched" class="text-danger">
+                                            <small *ngIf="isAllPublic.errors && isAllPublic.touched" class="text-danger">
                           * Debe seleccionar si es para todo público
                       </small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-              
-            <div>
-              <br>
-              <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
-              <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
-            </div>
-          </mat-step>
-        
-          <mat-step label="Precios" state="price" [stepControl]="priceFormGroup">
-            <form [formGroup]="priceFormGroup" id="div1" style="height: 460px; padding-top: 10px;">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="row">
-                    <div class="col-md-6" style="margin-bottom: 15px;">
-                      <label class="form-control-label">Evento gratuito?</label>
-                      <select name="isFree" id="isFree" class="form-control selectpicker" formControlName="isFree" required="true">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div>
+                            <br>
+                            <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
+                            <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
+                        </div>
+                    </mat-step>
+
+                    <mat-step label="Precios" state="price" [stepControl]="priceFormGroup">
+                        <form [formGroup]="priceFormGroup" id="div1" style="height: 460px; padding-top: 10px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6" style="margin-bottom: 15px;">
+                                            <label class="form-control-label">Evento gratuito?</label>
+                                            <select name="isFree" id="isFree" class="form-control selectpicker" formControlName="isFree" required="true">
                         <option value="" hidden>Seleccionar</option>
                         <option value="true">Si</option>
                         <option value="false">No</option>
                       </select>
-                      <small *ngIf="isFree.errors && isFree.touched" class="text-danger">
+                                            <small *ngIf="isFree.errors && isFree.touched" class="text-danger">
                           * Debe seleccionar si es para todo público
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6" *ngIf="(eventFormGroup.value.isAllPublic == 'true') && (priceFormGroup.value.isFree == 'false')" style="margin-bottom: 15px;">
-                      <label class="form-control-label">Hay descuento para niños?</label>
-                      <select name="discountChildren" id="discountChildren" class="form-control selectpicker" formControlName="discountChildren">
+                                        <div class="col-md-6" *ngIf="(eventFormGroup.value.isAllPublic == 'true') && (priceFormGroup.value.isFree == 'false')" style="margin-bottom: 15px;">
+                                            <label class="form-control-label">Hay descuento para niños?</label>
+                                            <select name="discountChildren" id="discountChildren" class="form-control selectpicker" formControlName="discountChildren">
                         <option value="" hidden>Seleccionar</option>
                         <option value="true">Si</option>
                         <option value="false">No</option>
                       </select>
-                      <small *ngIf="discountChildren.errors && discountChildren.touched" class="text-danger">
+                                            <small *ngIf="discountChildren.errors && discountChildren.touched" class="text-danger">
                           * Debe seleccionar si es para todo público
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6" *ngIf="priceFormGroup.value.isFree == 'false'">
-                      <label class="form-control-label">Hay descuento para personas con discapacidad?</label>
-                      <select name="discountDisability" id="discountDisability" class="form-control selectpicker" formControlName="discountDisability">
+                                        <div class="col-md-6" *ngIf="priceFormGroup.value.isFree == 'false'">
+                                            <label class="form-control-label">Hay descuento para personas con discapacidad?</label>
+                                            <select name="discountDisability" id="discountDisability" class="form-control selectpicker" formControlName="discountDisability">
                         <option value="" hidden>Seleccionar</option>
                         <option value="true">Si</option>
                         <option value="false">No</option>
                       </select>
-                      <small *ngIf="discountDisability.errors && discountDisability.touched" class="text-danger">
+                                            <small *ngIf="discountDisability.errors && discountDisability.touched" class="text-danger">
                           * Debe seleccionar si es para todo público
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6" *ngIf="(eventFormGroup.value.isAllPublic == 'true') && (priceFormGroup.value.discountChildren == 'true')" style="margin-bottom: 15px;">
-                      <label class="form-control-label">Porcetaje descuento niños</label>
-                      <input class="form-control" placeholder="Porcentaje descuento" type="text" formControlName="percentageChildren" />
-                      <small *ngIf="percentageChildren.errors && percentageChildren.touched" class="text-danger">
+                                        <div class="col-md-6" *ngIf="(eventFormGroup.value.isAllPublic == 'true') && (priceFormGroup.value.discountChildren == 'true')" style="margin-bottom: 15px;">
+                                            <label class="form-control-label">Porcetaje descuento niños</label>
+                                            <input class="form-control" placeholder="Porcentaje descuento" type="text" formControlName="percentageChildren" />
+                                            <small *ngIf="percentageChildren.errors && percentageChildren.touched" class="text-danger">
                           * Precio entrada niños requerido
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6" *ngIf="priceFormGroup.value.discountDisability == true || priceFormGroup.value.discountDisability == 'true'">
-                      <label class="form-control-label">Porcentaje descuento personas con discapacidad</label>
-                      <input class="form-control" placeholder="Porcentaje descuento" type="text" formControlName="percentageDisability" />
-                      <small *ngIf="percentageDisability.errors && percentageDisability.touched" class="text-danger">
+                                        <div class="col-md-6" *ngIf="priceFormGroup.value.isFree == 'false'">
+                                            <label class="form-control-label">Grava iva?</label>
+                                            <select name="iva" id="iva" class="form-control selectpicker" formControlName="iva">
+                        <option value="" hidden>Seleccionar</option>
+                        <option value="true">Si</option>
+                        <option value="false">No</option>
+                      </select>
+                                            <small *ngIf="iva.errors && iva.touched" class="text-danger">
+                          * Debe seleccionar si grava Iva
+                      </small>
+                                        </div>
+
+                                        <div class="col-md-6" *ngIf="priceFormGroup.value.discountDisability == true || priceFormGroup.value.discountDisability == 'true'">
+                                            <label class="form-control-label">Porcentaje descuento personas con discapacidad</label>
+                                            <input class="form-control" placeholder="Porcentaje descuento" type="text" formControlName="percentageDisability" />
+                                            <small *ngIf="percentageDisability.errors && percentageDisability.touched" class="text-danger">
                           * Precio personas con discapacidad requerido
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6" *ngIf="(eventFormGroup.value.isAllPublic == 'true' ) && (priceFormGroup.value.isFree == 'false')" style="margin-bottom: 15px;">
-                      <label class="form-control-label">Edad niños</label>
-                      <input class="form-control" placeholder="Edad niños" type="text" formControlName="ageChildren" />
-                      <small *ngIf="ageChildren.errors && ageChildren.touched" class="text-danger">
+                                        <div class="col-md-6" *ngIf="(eventFormGroup.value.isAllPublic == 'true' ) && (priceFormGroup.value.isFree == 'false')" style="margin-bottom: 15px;">
+                                            <label class="form-control-label">Edad niños</label>
+                                            <input class="form-control" placeholder="Edad niños" type="text" formControlName="ageChildren" />
+                                            <small *ngIf="ageChildren.errors && ageChildren.touched" class="text-danger">
                           * Edad niños requerido
                       </small>
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-            </form>
+                                        </div>
 
-            <div>
-              <br>
-              <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
-              <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
-            </div>
-          </mat-step>
 
-          <mat-step label="Extras" state="extras" [stepControl]="extraFormGroup">
-            <form [formGroup]="extraFormGroup" id="div1" style="height: 460px; padding-top: 10px;">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label class="form-control-label">Horario de Apertura</label>
-                      <input class="form-control" placeholder="Horario de apertura" type="time" formControlName="openingHours" required="true" />
-                      <small *ngIf="openingHours.errors && openingHours.touched" class="text-danger">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
+                        <div>
+                            <br>
+                            <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
+                            <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
+                        </div>
+                    </mat-step>
+
+                    <mat-step label="Extras" state="extras" [stepControl]="extraFormGroup">
+                        <form [formGroup]="extraFormGroup" id="div1" style="height: 460px; padding-top: 10px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Horario de Apertura</label>
+                                            <input class="form-control" placeholder="Horario de apertura" type="time" formControlName="openingHours" required="true" />
+                                            <small *ngIf="openingHours.errors && openingHours.touched" class="text-danger">
                           * Horario de apertura requerido
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6">
-                      <label class="form-control-label">Tiene parqueadero?</label>
-                      <select name="hasParking" id="hasParking" class="form-control selectpicker" formControlName="hasParking">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Tiene parqueadero?</label>
+                                            <select name="hasParking" id="hasParking" class="form-control selectpicker" formControlName="hasParking">
                         <option value="" hidden>Seleccionar</option>
                         <option value="true">Si</option>
                         <option value="false">No</option>
                       </select>
-                      <small *ngIf="hasParking.errors && hasParking.touched" class="text-danger">
+                                            <small *ngIf="hasParking.errors && hasParking.touched" class="text-danger">
                           * Debe seleccionar si tiene parqueadero
                       </small>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="col-md-12" style="margin-top: 15px;">
-                  <div class="row">
-                    <div class="col-md-6" *ngIf="extraFormGroup.value.hasParking == 'true'">
-                      <label class="form-control-label">Número de puestos</label>
-                      <input class="form-control" placeholder="Número de puestos" type="text" formControlName="parkingNumber" />
-                      <small *ngIf="parkingNumber.errors && parkingNumber.touched" class="text-danger">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" style="margin-top: 15px;">
+                                    <div class="row">
+                                        <div class="col-md-6" *ngIf="extraFormGroup.value.hasParking == 'true'">
+                                            <label class="form-control-label">Número de puestos</label>
+                                            <input class="form-control" placeholder="Número de puestos" type="text" formControlName="parkingNumber" />
+                                            <small *ngIf="parkingNumber.errors && parkingNumber.touched" class="text-danger">
                           * Descripción requerido
                       </small>
-                    </div>
+                                        </div>
 
-                    <div class="col-md-6">
-                      <label class="form-control-label">Existen Requerimientos?</label>
-                      <select name="existRequirements" id="existRequirements" class="form-control selectpicker" formControlName="existRequirements">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label">Existen Requerimientos?</label>
+                                            <select name="existRequirements" id="existRequirements" class="form-control selectpicker" formControlName="existRequirements">
                         <option value="" hidden>Seleccionar</option>
                         <option value="true">Si</option>
                         <option value="false">No</option>
                       </select>
-                      <small *ngIf="existRequirements.errors && existRequirements.touched" class="text-danger">
+                                            <small *ngIf="existRequirements.errors && existRequirements.touched" class="text-danger">
                           * Debe seleccionar si existen requerimientos
                       </small>
-                    </div>
-                  </div>
-                </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div class="col-md-12" style="margin-top: 15px;" *ngIf="extraFormGroup.value.existRequirements == 'true'">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <label class="form-control-label">Descripción requerimientos</label>
-                      <textarea class="form-control" id="requirementsDescription" name="requirementsDescription" rows="5" cols="10" formControlName="requirementsDescription" >Descripción de requerimientos</textarea>
-                      <small *ngIf="requirementsDescription.errors && requirementsDescription.touched" class="text-danger">
+                                <div class="col-md-12" style="margin-top: 15px;" *ngIf="extraFormGroup.value.existRequirements == 'true'">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="form-control-label">Descripción requerimientos</label>
+                                            <textarea class="form-control" id="requirementsDescription" name="requirementsDescription" rows="5" cols="10" formControlName="requirementsDescription">Descripción de requerimientos</textarea>
+                                            <small *ngIf="requirementsDescription.errors && requirementsDescription.touched" class="text-danger">
                           * Descripción de requerimientos requerido
                       </small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
 
-            <div>
-              <br>
-              <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
-              <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
-            </div>
-          </mat-step>
+                        <div>
+                            <br>
+                            <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
+                            <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
+                        </div>
+                    </mat-step>
 
-          <mat-step label="Ubicacion" state="location" [stepControl]="mapFormGroup">
-            <form [formGroup]="mapFormGroup">
-              <div class="col-md-12">
-                <label class="form-control-label">
+                    <mat-step label="Ubicacion" state="location" [stepControl]="mapFormGroup">
+                        <form [formGroup]="mapFormGroup">
+                            <div class="col-md-12">
+                                <label class="form-control-label">
                   Ubicación física del evento 
                   <i class="fas fa-question-circle"
                     matTooltip="- Marca la uicación precisa del evento haciendo click en el mapa."
                     matTooltipPosition="right">
                   </i>
                 </label>
-                
-                <app-map-card (coorsEmit)="setLatLng($event)"></app-map-card>
-              </div>
 
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-6">
-                    <label class="form-control-label">Latitud</label>
-                    <input class="form-control" placeholder="Latitud" type="text" formControlName="lat" required="true" (keypress)="validarCampoLngLat($event)" />
-                    <small *ngIf="lat.errors && lat.touched" class="text-danger">
+                                <app-map-card (coorsEmit)="setLatLng($event)"></app-map-card>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="form-control-label">Latitud</label>
+                                        <input class="form-control" placeholder="Latitud" type="text" formControlName="lat" required="true" (keypress)="validarCampoLngLat($event)" />
+                                        <small *ngIf="lat.errors && lat.touched" class="text-danger">
                         * Latitud requerido
                     </small>
-                  </div>
+                                    </div>
 
-                  <div class="col-md-6">
-                    <label class="form-control-label">Longitud</label>
-                    <input class="form-control" placeholder="Longitud" type="text" formControlName="lng" required="true" (keypress)="validarCampoLngLat($event)" />
-                    <small *ngIf="lng.errors && lng.touched" class="text-danger">
+                                    <div class="col-md-6">
+                                        <label class="form-control-label">Longitud</label>
+                                        <input class="form-control" placeholder="Longitud" type="text" formControlName="lng" required="true" (keypress)="validarCampoLngLat($event)" />
+                                        <small *ngIf="lng.errors && lng.touched" class="text-danger">
                         * Longitud requerido
                     </small>
-                  </div>
-                </div>
-              </div>
-            </form>
-            
-            <div>
-              <br>
-              <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
-              <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
-            </div>
-          </mat-step>
-          
-        
-          <mat-step label="Imagen" state="image" [stepControl]="imgFormGroup" *ngIf="!idEvt">
-            <form [formGroup]="imgFormGroup" id="div1" style="height: 460px; padding-top: 10px;" enctype="multipart/form-data">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
-                    <ngx-dropzone-label>
-                      <div>
-                        <img  src="assets/img/icons/upload.png" width="64px" height="64px">
-                        <h3 style="color: #000;">Sube una nueva imagen o conserva la que tienes</h3>
-                        <h3 style="color: #000;">Has click para buscar una imagen</h3>
-                      </div>
-                    </ngx-dropzone-label>
-                    <ngx-dropzone-image-preview class="center" id="preview" ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f[0]" [removable]="true" (removed)="onRemove(f[0])">
-                    </ngx-dropzone-image-preview>
-                  </div>
-                  <input type="hidden" required formControlName="imgName" id="imgName" name="imgName">
-                </div>
-              </div>
-              <br />
-              
-            </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
 
-            <div>
-              <br>
-              <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
-              <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
-            </div>
-          </mat-step>
+                        <div>
+                            <br>
+                            <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
+                            <button mat-button matStepperNext #next style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
+                        </div>
+                    </mat-step>
 
-          <!-- <mat-step label="Publicidad" state="image" [stepControl]="imgAdvFormGroup">
+
+                    <mat-step label="Imagen" state="image" [stepControl]="imgFormGroup" *ngIf="!idEvt">
+                        <form [formGroup]="imgFormGroup" id="div1" style="height: 460px; padding-top: 10px;" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                                        <ngx-dropzone-label>
+                                            <div>
+                                                <img src="assets/img/icons/upload.png" width="64px" height="64px">
+                                                <h3 style="color: #000;">Sube una nueva imagen o conserva la que tienes</h3>
+                                                <h3 style="color: #000;">Has click para buscar una imagen</h3>
+                                            </div>
+                                        </ngx-dropzone-label>
+                                        <ngx-dropzone-image-preview class="center" id="preview" ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f[0]" [removable]="true" (removed)="onRemove(f[0])">
+                                        </ngx-dropzone-image-preview>
+                                    </div>
+                                    <input type="hidden" required formControlName="imgName" id="imgName" name="imgName">
+                                </div>
+                            </div>
+                            <br />
+
+                        </form>
+
+                        <div>
+                            <br>
+                            <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
+                            <button mat-button matStepperNext #next *ngIf="priceFormGroup.value.isFree == 'false'" style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
+                            <button mat-button matStepperNext #next *ngIf="priceFormGroup.value.isFree == 'true'" style="float: right; background-color: #f6c042; color: #000;" (click)="postEvent()">
+                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                Finalizar
+              </button>
+                        </div>
+                    </mat-step>
+
+                    <!-- <mat-step label="Publicidad" state="image" [stepControl]="imgAdvFormGroup">
             <form [formGroup]="imgAdvFormGroup" id="div1" style="height: 460px; padding-top: 10px;" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-md-12">
@@ -391,133 +410,133 @@
             </div>
           </mat-step> -->
 
-          <mat-step label="Localidades" state="image" *ngIf="priceFormGroup.value.isFree == 'false'">
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-md-6">
-                  <h3 class="text-center">
-                    Nueva Localidad
-                  </h3>
-                  <form [formGroup]="newLocalities" id="div1">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="row" style="margin-top: 5px;">
-                          <label style="margin-top: 7px;" class="col-md-4 form-control-label">Descripción</label>
-                          <input type="text" class="col-md-7 form-control" placeholder="Ingrese nombre de la localidad" formControlName="description">
-                        </div>
-                        
-                        <div class="row" style="margin-top: 5px;">
-                          <label style="margin-top: 7px;" class="col-md-4 form-control-label">Precio</label>
-                          <input type="text" class="col-md-7 form-control" placeholder="Ingrese el precio" formControlName="price">
-                        </div>
+                    <mat-step label="Localidades" state="image" *ngIf="priceFormGroup.value.isFree == 'false'">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="text-center">
+                                        Nueva Localidad
+                                    </h3>
+                                    <form [formGroup]="newLocalities" id="div1">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row" style="margin-top: 5px;">
+                                                    <label style="margin-top: 7px;" class="col-md-4 form-control-label">Descripción</label>
+                                                    <input type="text" class="col-md-7 form-control" placeholder="Ingrese nombre de la localidad" formControlName="description">
+                                                </div>
 
-                        <div class="row" style="margin-top: 5px;">
-                          <label style="margin-top: 7px;" class="col-md-4 form-control-label">Tipo de Numeración</label>
-                          <select name="type" id="type" #typeOpt class="col-md-7 form-control selectpicker" [value]="" formControlName="type">
+                                                <div class="row" style="margin-top: 5px;">
+                                                    <label style="margin-top: 7px;" class="col-md-4 form-control-label">Precio</label>
+                                                    <input type="text" class="col-md-7 form-control" placeholder="Ingrese el precio" formControlName="price">
+                                                </div>
+
+                                                <div class="row" style="margin-top: 5px;">
+                                                    <label style="margin-top: 7px;" class="col-md-4 form-control-label">Tipo de Numeración</label>
+                                                    <select name="type" id="type" #typeOpt class="col-md-7 form-control selectpicker" [value]="" formControlName="type">
                             <option value="" hidden>Seleccionar</option>
                             <option value="Secuencial">Secuencial</option>
                             <option value="Alfanumérico">Alfanumérico</option>
                           </select>
+                                                </div>
+
+                                                <div class="row" style="margin-top: 5px;" *ngIf="newLocalities.value.type == 'Secuencial'">
+                                                    <label style="margin-top: 7px;" class="col-md-4 form-control-label">Cantidad</label>
+                                                    <input type="text" class="col-md-7 form-control" placeholder="Ingrese cantidad de asientos" formControlName="quantity">
+                                                </div>
+
+                                                <div class="row" style="margin-top: 5px;" *ngIf="newLocalities.value.type == 'Alfanumérico'">
+                                                    <label style="margin-top: 7px;" class="col-md-4 form-control-label">Filas</label>
+                                                    <input type="text" class="col-md-7 form-control" placeholder="Ingrese número de filas" formControlName="rows">
+                                                </div>
+
+                                                <div class="row" style="margin-top: 5px;" *ngIf="newLocalities.value.type == 'Alfanumérico'">
+                                                    <label style="margin-top: 7px;" class="col-md-4 form-control-label">Columnas</label>
+                                                    <input type="text" class="col-md-7 form-control" placeholder="Ingrese número de columnas" formControlName="cols">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row" style="justify-content: center;">
+                                            <button class="btn btn-default" (click)="saveLocalities('new');">Guardar Localidad</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h3 class="text-center">
+                                        Listado de Opciones
+                                    </h3>
+                                    <div class="card mb-2" *ngFor="let pregunta of listLocalities; let i=index;">
+                                        <div class="card-header d-flex justify-content-between align-item-center">
+                                            <div style="width: 70%;">
+                                                {{ pregunta.description }}
+                                            </div>
+                                            <div style="width: 30%;" style="text-align: right;">
+                                                <button class="btn btn-primary btn-sm ml-1 mt-1" style="color: #000;" (click)="pregunta.hide = !pregunta.hide">Mostrar</button>
+                                                <button class="btn btn-danger btn-sm ml-1 mt-1" *ngIf="pregunta.newRecord == 'true'" (click)="deleteLocalities(i)">Eliminar</button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body" [hidden]="pregunta.hide">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    Precio: $ {{ pregunta.price }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    Tipo Numeración: {{ pregunta.type }} {{ pregunta._id }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="listLocalities.length == 0">
+                                        <h6>No hay localidades para mostrar</h6>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="row" style="margin-top: 5px;" *ngIf="newLocalities.value.type == 'Secuencial'">
-                          <label style="margin-top: 7px;" class="col-md-4 form-control-label">Cantidad</label>
-                          <input type="text" class="col-md-7 form-control" placeholder="Ingrese cantidad de asientos" formControlName="quantity">
-                        </div>
-
-                        <div class="row" style="margin-top: 5px;" *ngIf="newLocalities.value.type == 'Alfanumérico'">
-                          <label style="margin-top: 7px;" class="col-md-4 form-control-label">Filas</label>
-                          <input type="text" class="col-md-7 form-control" placeholder="Ingrese número de filas" formControlName="rows">
-                        </div>
-
-                        <div class="row" style="margin-top: 5px;" *ngIf="newLocalities.value.type == 'Alfanumérico'">
-                          <label style="margin-top: 7px;" class="col-md-4 form-control-label">Columnas</label>
-                          <input type="text" class="col-md-7 form-control" placeholder="Ingrese número de columnas" formControlName="cols">
-                        </div>
-                      </div>
-                    </div>
-                    <br>
-                    <div class="row" style="justify-content: center;">
-                      <button class="btn btn-default" (click)="saveLocalities('new');">Guardar Localidad</button>
-                    </div>
-                  </form>
-                </div>
-
-                <div class="col-md-6">
-                  <h3 class="text-center">
-                    Listado de Opciones
-                  </h3>
-                  <div class="card mb-2" *ngFor="let pregunta of listLocalities; let i=index;">
-                    <div class="card-header d-flex justify-content-between align-item-center">
-                      <div style="width: 70%;">
-                        {{ pregunta.description }}
-                      </div>
-                      <div style="width: 30%;" style="text-align: right;">
-                        <button class="btn btn-primary btn-sm ml-1 mt-1" style="color: #000;" (click)="pregunta.hide = !pregunta.hide">Mostrar</button>
-                        <button class="btn btn-danger btn-sm ml-1 mt-1" *ngIf="pregunta.newRecord == 'true'" (click)="deleteLocalities(i)">Eliminar</button>
-                      </div>
-                    </div>
-                    <div class="card-body" [hidden]="pregunta.hide">
-                      <ul class="list-group">
-                        <li class="list-group-item">
-                          Precio: $ {{ pregunta.price }}
-                        </li>
-                        <li class="list-group-item">
-                          Tipo Numeración: {{ pregunta.type }} {{ pregunta._id }}
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                 
-                  <div *ngIf="listLocalities.length == 0">
-                    <h6>No hay localidades para mostrar</h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <br>
-              <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
-              <button mat-button matStepperNext #next *ngIf="!idEvt" style="float: right; background-color: #f6c042; color: #000;" (click)="postEvent()">
+                        <div>
+                            <br>
+                            <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
+                            <button mat-button matStepperNext #next *ngIf="!idEvt" style="float: right; background-color: #f6c042; color: #000;" (click)="postEvent()">
                 <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
                 Finalizar
               </button>
-              
-              <button mat-button matStepperNext #next *ngIf="idEvt" style="float: right; background-color: #f6c042; color: #000;" (click)="putEvent()">
+
+                            <button mat-button matStepperNext #next *ngIf="idEvt" style="float: right; background-color: #f6c042; color: #000;" (click)="putEvent()">
                 <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
                 Editar
               </button>
 
+                        </div>
+                    </mat-step>
+
+                    <!-- Icon overrides. -->
+                    <ng-template matStepperIcon="category">
+                        <mat-icon>format_list_bulleted</mat-icon>
+                    </ng-template>
+
+                    <ng-template matStepperIcon="event">
+                        <mat-icon>dashboard</mat-icon>
+                    </ng-template>
+
+                    <ng-template matStepperIcon="price">
+                        <mat-icon>attach_money</mat-icon>
+                    </ng-template>
+
+                    <ng-template matStepperIcon="extras">
+                        <mat-icon>forum</mat-icon>
+                    </ng-template>
+
+                    <ng-template matStepperIcon="location">
+                        <mat-icon>place</mat-icon>
+                    </ng-template>
+
+                    <ng-template matStepperIcon="image">
+                        <mat-icon>collections</mat-icon>
+                    </ng-template>
+                </mat-horizontal-stepper>
             </div>
-          </mat-step>
-
-          <!-- Icon overrides. -->
-          <ng-template matStepperIcon="category">
-            <mat-icon>format_list_bulleted</mat-icon>
-          </ng-template>
-
-          <ng-template matStepperIcon="event">
-            <mat-icon>dashboard</mat-icon>
-          </ng-template>
-
-          <ng-template matStepperIcon="price">
-            <mat-icon>attach_money</mat-icon>
-          </ng-template>
-
-          <ng-template matStepperIcon="extras">
-            <mat-icon>forum</mat-icon>
-          </ng-template>
-
-          <ng-template matStepperIcon="location">
-            <mat-icon>place</mat-icon>
-          </ng-template>
-
-          <ng-template matStepperIcon="image">
-            <mat-icon>collections</mat-icon>
-          </ng-template>
-        </mat-horizontal-stepper> 
-      </div>  
-    </div>  
-  </div>  
-</div>  
+        </div>
+    </div>
+</div>

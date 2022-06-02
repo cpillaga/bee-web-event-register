@@ -21,6 +21,8 @@ export class EventDetailsComponent implements OnInit {
   iva = 0;
   total = 0;
   
+  gravaIva = false;
+
   selectCants: any[] = [];
   selectSubtotal: any[] = [];
   
@@ -41,13 +43,15 @@ export class EventDetailsComponent implements OnInit {
   getEventById(){
     this._api.getEventById(this.idEvt).subscribe(resp => {
       this.event = resp.body['eventDB'];
-       
+      
+      console.log(this.event);
       this.getDetailEvent(this.event._id);
     });
   }
 
   getDetailEvent(idEvent){
     this._api.getLocalities(idEvent).subscribe(resp => {
+      this.gravaIva = this.event.iva;
       this.localities = resp.body['locality'];
       
       if (this.localities.length > 0) {
@@ -163,8 +167,14 @@ export class EventDetailsComponent implements OnInit {
         this.subtotal = this.subtotal + this.selectSubtotal[i];
       }
 
-      this.total = Number(Number(this.subtotal * 1.12).toFixed(2));
-      this.iva = Number(Number(this.total - this.subtotal).toFixed(2));
+      if (this.event.iva === true) {
+        this.total = Number(Number(this.subtotal * 1.12).toFixed(2));
+        this.iva = Number(Number(this.total - this.subtotal).toFixed(2));
+      }else{
+        this.total = Number(Number(this.subtotal).toFixed(2));
+        this.iva = 0;
+      }
+
       return;
     }else{
       this.selectCants[index] =  valor;
@@ -173,8 +183,14 @@ export class EventDetailsComponent implements OnInit {
         this.subtotal = this.subtotal + this.selectSubtotal[i];
       }
 
-      this.total = Number(Number(this.subtotal * 1.12).toFixed(2));
-      this.iva = Number(Number(this.total - this.subtotal).toFixed(2));
+      if (this.event.iva === true) {
+        this.total = Number(Number(this.subtotal * 1.12).toFixed(2));
+        this.iva = Number(Number(this.total - this.subtotal).toFixed(2));
+      }else{
+        this.total = Number(Number(this.subtotal).toFixed(2));
+        this.iva = 0;
+      }
+
     }
   }
 

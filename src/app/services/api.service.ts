@@ -131,14 +131,14 @@ export class ApiService {
 
     return this._http.post(url, body, {headers, observe: 'response'});
   }
-
+ 
   generateTicketsSecuencial(body){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: this.getToken()
     });
 
-    const url = URL_SERVICES + `ticket/secuencial`;
+    const url = URL_SERVICES + `ticket-organizer/secuencial`;
 
     return this._http.post(url, body, {headers, observe: 'response'});
   }
@@ -256,5 +256,36 @@ export class ApiService {
     return this._http.get(url, { headers, observe: 'response' });
   }
 
+  getScanners(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
 
+    const url = URL_SERVICES + `scanner/${this.idOrganizer}`;
+
+    return this._http.get(url, { headers, observe: 'response' });
+  }
+
+  searchScanners(termino){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + `scanner/search/${this.idOrganizer}/${termino}`;
+
+    return this._http.get(url, { headers, observe: 'response' });
+  }
+
+  postScanners(body){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    });
+
+    const url = URL_SERVICES + `scanner`;
+
+    return this._http.post(url, body, { headers, observe: 'response' });
+  }
 }

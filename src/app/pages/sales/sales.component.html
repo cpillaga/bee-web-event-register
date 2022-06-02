@@ -25,7 +25,7 @@
                             <div class="card" style="border-radius: 10%;" title="{{ evt.nameEvent }}">
                                 <div class="card-header">
                                     <div class="row align-items-center">
-                                        <div class=" col-md-8" >
+                                        <div class=" col-md-8">
                                             <h5 class=" h3" style="padding-top: -12px; font-size: 14px;">
                                                 {{ evt.nameEvent.substring(0,19) }}
                                             </h5>
@@ -40,7 +40,7 @@
                                     <div class="text-center">
                                         <img alt="Image placeholder" class="image--pr" src="{{url}}view/event/{{evt.img}}" style="object-fit: contain;" />
                                     </div>
-                                    
+
                                     <div class="text-center" style="height: 60px;">
                                         <p>
                                             {{evt.description}}
@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="row" *ngIf="coincidencia == false">
-                        <p>No hay eventos para mostrar</p>
+                        <p class="msg-empty">No hay eventos para mostrar</p>
                     </div>
                 </div>
             </div>

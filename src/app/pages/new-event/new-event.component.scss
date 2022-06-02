@@ -1,218 +1,222 @@
-.active{
-  background-color: #000 !important;
-  color: #F6C042 !important;
-  text-align: center;
+.active {
+    background-color: #000 !important;
+    color: #F6C042 !important;
+    text-align: center !important;
 }
 
 .inactive {
-  background-color: #ffffff !important; 
-  color: #000 !important;
-  text-align: center;
+    background-color: #ffffff !important;
+    color: #000 !important;
+    text-align: center !important;
 }
 
 #div1 {
-  display: block;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 329px;
-  width: 100%;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 329px;
+    width: 100%;
 }
 
 #div1::-webkit-scrollbar {
-  -webkit-appearance: none;
+    -webkit-appearance: none;
 }
 
 #div1::-webkit-scrollbar:vertical {
-  width:10px;
+    width: 10px;
 }
 
-#div1::-webkit-scrollbar-button:increment,#div1::-webkit-scrollbar-button {
-  display: none;
-} 
+#div1::-webkit-scrollbar-button:increment,
+#div1::-webkit-scrollbar-button {
+    display: none;
+}
 
 #div1::-webkit-scrollbar:horizontal {
-  height: 10px;
+    height: 10px;
 }
 
 #div1::-webkit-scrollbar-thumb {
-  background-color: #797979;
-  border-radius: 20px;
-  border: 2px solid #f1f2f3;
+    background-color: #797979;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
 }
 
 #div1::-webkit-scrollbar-track {
-  border-radius: 10px;  
+    border-radius: 10px;
 }
 
 ngx-dropzone,
 .custom-dropzone {
-  // margin: 20px;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
+    // margin: 20px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .custom-dropzone {
-	height: 250px;
-  width: 400px;
-	// background: #ced4da;
-	background: #fff;
-	color: #000;
-	border: 5px dashed #fff;
-	border-radius: 5px;
-  box-shadow: 0px 1px 3px 1px #ced4da;
-	font-size: 20px; 
-  padding-top: 30px;
+    height: 250px;
+    width: 400px;
+    // background: #ced4da;
+    background: #fff;
+    color: #000;
+    border: 5px dashed #fff;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px 1px #ced4da;
+    font-size: 20px;
+    padding-top: 30px;
 }
 
-.boton .true{
-  background-color: #F6C042;
+.boton .true {
+    background-color: #F6C042;
 }
 
-.boton .false{
-  background-color: #ced4da;
+.boton .false {
+    background-color: #ced4da;
 }
 
 .custom-dropzone.ngx-dz-hovered {
-  border: 5px solid rgb(0,0,0);
+    border: 5px solid rgb(0, 0, 0);
 }
 
 ngx-dropzone,
 .custom-dropzone-p {
-  margin: 20px;
+    margin: 20px;
 }
 
 .custom-dropzone-p {
-	height: 250px;
-	background: #fff;
-	color: #000;
-	border: 5px dashed #fff;
-	border-radius: 5px;
-  box-shadow: 0px 1px 3px 1px #ced4da;
-	font-size: 20px;
+    height: 250px;
+    background: #fff;
+    color: #000;
+    border: 5px dashed #fff;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px 1px #ced4da;
+    font-size: 20px;
 }
 
 .custom-dropzone-p.ngx-dz-hovered {
-  border: 5px solid rgb(235, 79, 79);
+    border: 5px solid rgb(235, 79, 79);
 }
 
 #preview {
-  display: flex;
-  height: 180px;
-  min-height: 180px;
-  min-width: 200px;
-  max-width: 200px;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  // padding: 0px 20px;
-  margin: 10px;
-  border-radius: 5px;
-  position: relative;
+    display: flex;
+    height: 180px;
+    min-height: 180px;
+    min-width: 200px;
+    max-width: 200px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    // padding: 0px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    position: relative;
 }
 
 #preview1 {
-  display: flex;
-  height: 180px;
-  min-height: 180px;
-  min-width: 200px;
-  max-width: 200px;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  // padding: 0px 20px;
-  margin: 10px;
-  border: 2px solid #000;
-  border-radius: 5px;
-  position: relative;
+    display: flex;
+    height: 180px;
+    min-height: 180px;
+    min-width: 200px;
+    max-width: 200px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    // padding: 0px 20px;
+    margin: 10px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    position: relative;
 }
 
 .center {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
-
 .padre {
-  display: table;
-  height:200px;
+    display: table;
+    height: 200px;
 }
 
 .hijo {
-  display: table-cell;
-  vertical-align: middle;
+    display: table-cell;
+    vertical-align: middle;
 }
 
-.delete-icon{
-  font-size: 30px;
-  cursor: pointer;
-  color: #ce4b4c;
-  margin-top: 7px;
+.delete-icon {
+    font-size: 30px;
+    cursor: pointer;
+    color: #ce4b4c;
+    margin-top: 7px;
 }
-
 
 textarea {
-  resize: none;
+    resize: none;
 }
 
 .card-wizard .picture-container {
-  position: relative;
-  cursor: pointer;
-  text-align: center;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
 }
 
 .card-wizard .picture {
-  width: auto;
-  height: 250px;
-  background-color: #999999;
-  border: 1px solid #E3E3E3;
-  color: #FFFFFF;
-  margin: 5px auto;
-  overflow: hidden;
-  transition: all 0.2s;
-  -webkit-transition: all 0.2s;
+    width: auto;
+    height: 250px;
+    background-color: #999999;
+    border: 1px solid #E3E3E3;
+    color: #FFFFFF;
+    margin: 5px auto;
+    overflow: hidden;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
 }
 
 .card-wizard .picture:hover {
-  border-color: #2ca8ff;
+    border-color: #2ca8ff;
 }
 
-
 .card-wizard .moving-tab {
-  position: absolute;
-  text-align: center;
-  padding: 12px;
-  font-size: 12px;
-  text-transform: uppercase;
-  -webkit-font-smoothing: subpixel-antialiased;
-  top: -4px;
-  left: 0px;
-  border-radius: 30px;
-  background-color: #FFFFFF;
-  box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
-  color: #f96332;
-  cursor: pointer;
-  font-weight: 500;
+    position: absolute;
+    text-align: center;
+    padding: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    -webkit-font-smoothing: subpixel-antialiased;
+    top: -4px;
+    left: 0px;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+    color: #f96332;
+    cursor: pointer;
+    font-weight: 500;
 }
 
 .card-wizard .picture input[type="file"] {
-  cursor: pointer;
-  display: block;
-  height: 100%;
-  left: 0;
-  opacity: 0 !important;
-  position: absolute;
-  top: 0;
-  width: 100%;
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0 !important;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 .card-wizard .picture-src {
-  width: 100%;
+    width: 100%;
 }
 
 .card-wizard .tab-content {
-  min-height: 440px ;
-  /* padding-bottom: 50px; */
+    min-height: 440px;
+    /* padding-bottom: 50px; */
+}
+
+option:checked,
+select:focus::-ms-value,
+select:focus option:checked:hover {
+    background-color: rgb(53, 140, 61);
 }

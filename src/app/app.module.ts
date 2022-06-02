@@ -16,8 +16,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
 import { LoginComponent } from './pages/login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { StoryComponent } from './pages/story/story.component';
-import { EventDetailsComponent } from './pages/event-details/event-details.component';
 
 @NgModule({
   imports: [

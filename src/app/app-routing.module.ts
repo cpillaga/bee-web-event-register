@@ -49,6 +49,10 @@ const routes: Routes = [
         loadChildren: './pages/sales/sales.module#SalesModule'
       },
       {
+        path: 'scanners',
+        loadChildren: './pages/scanners/scanners.module#ScannersModule'
+      },
+      {
         path: 'stories',
         loadChildren: './pages/story/story.module#StoryModule'
       },
