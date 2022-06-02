@@ -186,85 +186,102 @@ export class NewEventComponent implements OnInit {
 
   createFromEdit(idEvt){
     this._api.getEventById(idEvt).subscribe(resp => {
-      this.eventData = resp.body['eventDB'];
+      this._api.getLocalities(idEvt).subscribe(respLocality => {
+        console.log();
+        let localities = respLocality.body['locality'];
+        this.eventData = resp.body['eventDB'];
 
-      this.latE = this.eventData.lat;
-      this.lngE = this.eventData.lng;
+        this.latE = this.eventData.lat;
+        this.lngE = this.eventData.lng;
+  
+        this.eventFormGroup = this._formBuilder.group({
+          nameEvent: ['', [Validators.required]],
+          description: ['', [Validators.required]],
+          city: ['', [Validators.required]],
+          place: ['', [Validators.required]],
+          date: ['', [Validators.required]],
+          startTime: ['', [Validators.required]],
+          endTime: ['', [Validators.required]],
+          isAllPublic: ['', [Validators.required]],
+        });
 
-      this.categoryFormGroup = this._formBuilder.group({
-        categoria: ['', [Validators.required, Validators.minLength(1)]]
-      });
-      
-      this.newLocalities = this._formBuilder.group({
-        description: ['', [Validators.required]],
-        price: ['', [Validators.required]],
-        type: ['', [Validators.required]],
-        quantity:  ['', [Validators.required]],
-      }); 
-
-      for (let i = 0; i < this.categories.length; i++) {
-        if (this.categories[i].name === this.eventData.category) {
-          this.selectCategory(this.categories[i], i);
-        }
-      }
-
-      this.eventFormGroup = this._formBuilder.group({
-        nameEvent: [this.eventData.nameEvent, [Validators.required]],
-        description: [this.eventData.description, [Validators.required]],
-        city: [this.eventData.city, [Validators.required]],
-        place: [this.eventData.place, [Validators.required]],
-        date: [this.eventData.date.substring(0, 10), [Validators.required]],
-        startTime: [this.eventData.startTime.substring(11, 16), [Validators.required]],
-        endTime: [this.eventData.endTime.substring(11, 16), [Validators.required]],
-        isAllPublic: [this.eventData.isAllPublic.toString(), [Validators.required]],
-      });
-
-      this.priceFormGroup = this._formBuilder.group({
-        isFree: [this.eventData.isFree.toString(), [Validators.required]],
-        ageChildren: [this.eventData.ageChildren],
-        discountDisability: [this.eventData.discountDisability],
-        discountChildren: [this.eventData.discountChildren.toString()],
-        percentageChildren: [this.eventData.percentageChildren],
-        percentageDisability: [this.eventData.percentageDisability],
-      });
-
-      this.extraFormGroup = this._formBuilder.group({
-        openingHours: [this.eventData.openingHours, [Validators.required]],
-        hasParking: [this.eventData.hasParking.toString(), [Validators.required]],
-        existRequirements: [this.eventData.existRequirements.toString(), [Validators.required]],
-        requirementsDescription: [this.eventData.requirementsDescription],
-        parkingNumber: [this.eventData.parkingNumber],
-        iva: [this.eventData.iva]
-      });
-
-      this.mapFormGroup = this._formBuilder.group({
-        lat: [this.eventData.lat, [Validators.required]],
-        lng: [this.eventData.lng, [Validators.required]],
-      });
-
-      this.imgTemp = this.url + "view/event/" + this.eventData.img;
-      
-      if (this.priceFormGroup.value.isFree == 'false') {
-        for (let i = 0; i < this.eventData.localities.length; i++) {
-          if (this.idEvt) {
-            this.newLocalities = this._formBuilder.group({
-              description: [this.eventData.localities[i].description, [Validators.required]],
-              price: [this.eventData.localities[i].price, [Validators.required]],
-              type: ['Secuencial', [Validators.required]],
-              quantity:  [this.eventData.localities[i].amount, [Validators.required]],
-            });
-          }else{
-            this.newLocalities = this._formBuilder.group({
-              description: [this.eventData.localities[i].description, [Validators.required]],
-              price: [this.eventData.localities[i].price, [Validators.required]],
-              type: [this.eventData.localities[i].type, [Validators.required]],
-              quantity:  [this.eventData.localities[i].amount, [Validators.required]],
-            }); 
+        this.categoryFormGroup = this._formBuilder.group({
+          categoria: ['', [Validators.required, Validators.minLength(1)]]
+        });
+        
+        this.newLocalities = this._formBuilder.group({
+          description: ['', [Validators.required]],
+          price: ['', [Validators.required]],
+          type: ['', [Validators.required]],
+          quantity:  ['', [Validators.required]],
+        }); 
+  
+        for (let i = 0; i < this.categories.length; i++) {
+          if (this.categories[i].name === this.eventData.category) {
+            this.selectCategory(this.categories[i], i);
           }
-          this.saveLocalities("add");
         }
-      }
+  
+        this.eventFormGroup = this._formBuilder.group({
+          nameEvent: [this.eventData.nameEvent, [Validators.required]],
+          description: [this.eventData.description, [Validators.required]],
+          city: [this.eventData.city, [Validators.required]],
+          place: [this.eventData.place, [Validators.required]],
+          date: [this.eventData.date.substring(0, 10), [Validators.required]],
+          startTime: [this.eventData.startTime.substring(11, 16), [Validators.required]],
+          endTime: [this.eventData.endTime.substring(11, 16), [Validators.required]],
+          isAllPublic: [this.eventData.isAllPublic.toString(), [Validators.required]],
+        });
+  
+        this.priceFormGroup = this._formBuilder.group({
+          isFree: [this.eventData.isFree.toString(), [Validators.required]],
+          ageChildren: [this.eventData.ageChildren],
+          discountDisability: [this.eventData.discountDisability],
+          discountChildren: [this.eventData.discountChildren.toString()],
+          percentageChildren: [this.eventData.percentageChildren],
+          percentageDisability: [this.eventData.percentageDisability],
+          iva: [this.eventData.iva]
+        });
+  
+        this.extraFormGroup = this._formBuilder.group({
+          openingHours: [this.eventData.openingHours, [Validators.required]],
+          hasParking: [this.eventData.hasParking.toString(), [Validators.required]],
+          existRequirements: [this.eventData.existRequirements.toString(), [Validators.required]],
+          requirementsDescription: [this.eventData.requirementsDescription],
+          parkingNumber: [this.eventData.parkingNumber],
+          iva: [this.eventData.iva]
+        });
+  
+        this.mapFormGroup = this._formBuilder.group({
+          lat: [this.eventData.lat, [Validators.required]],
+          lng: [this.eventData.lng, [Validators.required]],
+        });
+  
+        this.imgTemp = this.url + "view/event/" + this.eventData.img;
+        
+        if (this.priceFormGroup.value.isFree == 'false') {
+          for (let i = 0; i < localities.length; i++) {
+            if (this.idEvt) {
+              this.newLocalities = this._formBuilder.group({
+                description: [localities[i].description, [Validators.required]],
+                price: [localities[i].price, [Validators.required]],
+                type: ['Secuencial', [Validators.required]],
+                quantity:  [localities[i].amount, [Validators.required]],
+              });
+            }else{
+              this.newLocalities = this._formBuilder.group({
+                description: [localities[i].description, [Validators.required]],
+                price: [localities[i].price, [Validators.required]],
+                type: [localities[i].type, [Validators.required]],
+                quantity:  [localities[i].amount, [Validators.required]],
+              }); 
+            }
+            this.saveLocalities("add");
+          }
+        }
+      });
     });
+      
   }
 
   getCategories(){

@@ -436,10 +436,10 @@
                                                 <div class="row" style="margin-top: 5px;">
                                                     <label style="margin-top: 7px;" class="col-md-4 form-control-label">Tipo de Numeración</label>
                                                     <select name="type" id="type" #typeOpt class="col-md-7 form-control selectpicker" [value]="" formControlName="type">
-                                                        <option value="" hidden>Seleccionar</option>
-                                                        <option value="Secuencial">Secuencial</option>
-                                                        <option value="Alfanumérico">Alfanumérico</option>
-                                                    </select>
+                            <option value="" hidden>Seleccionar</option>
+                            <option value="Secuencial">Secuencial</option>
+                            <option value="Alfanumérico">Alfanumérico</option>
+                          </select>
                                                 </div>
 
                                                 <div class="row" style="margin-top: 5px;" *ngIf="newLocalities.value.type == 'Secuencial'">
@@ -502,14 +502,14 @@
                             <br>
                             <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
                             <button mat-button matStepperNext #next *ngIf="!idEvt" style="float: right; background-color: #f6c042; color: #000;" (click)="postEvent()">
-                                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
-                                Finalizar
-                            </button>
+                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                Finalizar
+              </button>
 
                             <button mat-button matStepperNext #next *ngIf="idEvt" style="float: right; background-color: #f6c042; color: #000;" (click)="putEvent()">
-                                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
-                                Editar
-                            </button>
+                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                Editar
+              </button>
 
                         </div>
                     </mat-step>
