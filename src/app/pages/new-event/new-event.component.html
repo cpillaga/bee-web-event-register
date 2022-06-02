@@ -309,15 +309,18 @@
                         <form [formGroup]="mapFormGroup">
                             <div class="col-md-12">
                                 <label class="form-control-label">
-                  Ubicación física del evento 
-                  <i class="fas fa-question-circle"
-                    matTooltip="- Marca la uicación precisa del evento haciendo click en el mapa."
-                    matTooltipPosition="right">
-                  </i>
-                </label>
+                                    Ubicación física del evento 
+                                    <i class="fas fa-question-circle"
+                                        matTooltip="- Marca la uicación precisa del evento haciendo click en el mapa."
+                                        matTooltipPosition="right">
+                                    </i>
+                                </label>
 
-                                <app-map-card (coorsEmit)="setLatLng($event)"></app-map-card>
+                                <app-map-card [lat]="latE" [lng]="lngE" (coorsEmit)="setLatLng($event)"></app-map-card>
                             </div>
+
+                            <!-- <app-map-card (coorsEmit)="setLatLng($event)"></app-map-card>
+                            </div> -->
 
                             <div class="col-md-12">
                                 <div class="row">
@@ -325,16 +328,16 @@
                                         <label class="form-control-label">Latitud</label>
                                         <input class="form-control" placeholder="Latitud" type="text" formControlName="lat" required="true" (keypress)="validarCampoLngLat($event)" />
                                         <small *ngIf="lat.errors && lat.touched" class="text-danger">
-                        * Latitud requerido
-                    </small>
+                                            * Latitud requerido
+                                        </small>
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-control-label">Longitud</label>
                                         <input class="form-control" placeholder="Longitud" type="text" formControlName="lng" required="true" (keypress)="validarCampoLngLat($event)" />
                                         <small *ngIf="lng.errors && lng.touched" class="text-danger">
-                        * Longitud requerido
-                    </small>
+                                            * Longitud requerido
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -375,9 +378,9 @@
                             <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
                             <button mat-button matStepperNext #next *ngIf="priceFormGroup.value.isFree == 'false'" style="float: right; background-color: #f6c042; color: #000;">Siguiente</button>
                             <button mat-button matStepperNext #next *ngIf="priceFormGroup.value.isFree == 'true'" style="float: right; background-color: #f6c042; color: #000;" (click)="postEvent()">
-                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
-                Finalizar
-              </button>
+                                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                                Finalizar
+                            </button>
                         </div>
                     </mat-step>
 
@@ -433,10 +436,10 @@
                                                 <div class="row" style="margin-top: 5px;">
                                                     <label style="margin-top: 7px;" class="col-md-4 form-control-label">Tipo de Numeración</label>
                                                     <select name="type" id="type" #typeOpt class="col-md-7 form-control selectpicker" [value]="" formControlName="type">
-                            <option value="" hidden>Seleccionar</option>
-                            <option value="Secuencial">Secuencial</option>
-                            <option value="Alfanumérico">Alfanumérico</option>
-                          </select>
+                                                        <option value="" hidden>Seleccionar</option>
+                                                        <option value="Secuencial">Secuencial</option>
+                                                        <option value="Alfanumérico">Alfanumérico</option>
+                                                    </select>
                                                 </div>
 
                                                 <div class="row" style="margin-top: 5px;" *ngIf="newLocalities.value.type == 'Secuencial'">
@@ -499,14 +502,14 @@
                             <br>
                             <button mat-button matStepperPrevious style="float: left; background-color: #f6c042; color: #000;">Anterior</button>
                             <button mat-button matStepperNext #next *ngIf="!idEvt" style="float: right; background-color: #f6c042; color: #000;" (click)="postEvent()">
-                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
-                Finalizar
-              </button>
+                                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                                Finalizar
+                            </button>
 
                             <button mat-button matStepperNext #next *ngIf="idEvt" style="float: right; background-color: #f6c042; color: #000;" (click)="putEvent()">
-                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
-                Editar
-              </button>
+                                <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                                Editar
+                            </button>
 
                         </div>
                     </mat-step>
